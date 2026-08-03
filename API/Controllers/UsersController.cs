@@ -1,14 +1,14 @@
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
+{  
+    [Authorize]
 
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context; //store connection to database 
         public UsersController(DataContext context)
@@ -17,6 +17,7 @@ namespace API.Controllers
             
         }//this is dependency injection , in Program.cs:builder.Services.AddDbContext<DataContext>(...);
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
