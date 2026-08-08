@@ -484,6 +484,7 @@ $RECYCLE.BIN/
 # Angular
 client/node_modules/
 client/dist/
+client/.angular/
 
 # Database
 *.db
