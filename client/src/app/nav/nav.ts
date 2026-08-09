@@ -31,7 +31,6 @@ export class Nav implements OnInit{
     console.log(this.model);
     this.account.login(this.model).subscribe({
       next: () => this.router.navigateByUrl('/gyms'),
-      error: error => this.toastr.error(error)
     })
   }
 

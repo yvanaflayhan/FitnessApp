@@ -6,6 +6,9 @@ import { Trainers } from './trainers/trainers';
 import { Bookings } from './bookings/bookings';
 import { Profile } from './profile/profile';
 import { authGuard } from './_guards/auth-guard';
+import { TestError } from './errors/test-error/test-error';
+import { NotFound } from './errors/not-found/not-found';
+import { ServerError } from './errors/server-error/server-error';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -22,7 +25,10 @@ export const routes: Routes = [
 
         ]
     },
-    { path: '**', component: Home, pathMatch: 'full' },
+    {path: 'errors', component: TestError},
+    {path: 'not-found', component: NotFound},
+    {path: 'server-error', component: ServerError},
+    { path: '**', component: NotFound, pathMatch: 'full' },
 
 ];
 
