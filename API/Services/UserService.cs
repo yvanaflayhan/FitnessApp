@@ -1,5 +1,5 @@
 using API.DTOs;
-using API.Interfaces;
+using API.Repositories;
 
 namespace API.Services
 {
