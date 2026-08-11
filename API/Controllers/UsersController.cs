@@ -1,35 +1,38 @@
-using API.Data;
-using API.Entities;
+using API.DTOs;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
-{  
+{
     [Authorize]
-
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context; //store connection to database 
-        public UsersController(DataContext context)
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
         {
-            _context = context;
-            
-        }//this is dependency injection , in Program.cs:builder.Services.AddDbContext<DataContext>(...);
+            _userService = userService;
+        }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await _context.Users.ToListAsync();//User Table , ToList: execute the query 
+            var users = await _userService.GetUsersAsync();
 
-            return users;
+            return Ok(users);
         }
 
-        [HttpGet("{id}")] //GET /api/users/5
-        public async Task<ActionResult<AppUser>> GetUser(int id)//return one user 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MemberDto>> GetUser(int id)
         {
-            return await _context.Users.FindAsync(id); //this tells Entity FrameWork Core: find the user whose primary key equals id 
+            var user = await _userService.GetUserAsync(id);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
     }
 }
