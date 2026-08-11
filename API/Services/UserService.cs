@@ -28,5 +28,25 @@ namespace API.Services
 
             return new MemberDto { Id = user.Id, Username = user.UserName, Role=user.Role };
         }
+
+        public async Task<MemberDto?> UpdateUserAsync (int id, MemberUpdateDto updateDto)
+        {
+            var user = await _userRepository.GetUserAsync(id);
+
+            if(user == null)
+                return null;
+
+            user.UserName = updateDto.Username;
+            user.Role = updateDto.Role;
+
+            await _userRepository.UpdateUserAsync(user);
+
+            return new MemberDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Role = user.Role
+            };
+        }
     }
 }

@@ -38,5 +38,12 @@ namespace API.Repositories
         {
             return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
         }
+
+        public async Task UpdateUserAsync(AppUser user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

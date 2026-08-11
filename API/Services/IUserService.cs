@@ -6,5 +6,8 @@ namespace API.Services
     {
         Task<IEnumerable<MemberDto>> GetUsersAsync();
         Task<MemberDto?> GetUserAsync(int id);
+
+        Task<MemberDto?> UpdateUserAsync(int id, MemberUpdateDto updateDto);
+        
     }
 }

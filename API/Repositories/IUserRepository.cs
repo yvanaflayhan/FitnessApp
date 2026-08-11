@@ -10,5 +10,7 @@ namespace API.Repositories
         Task<bool> UserExistsAsync(string username);
         Task AddUserAsync(AppUser user);
         Task<AppUser?> GetUserByUsernameAsync(string username);
+
+        Task UpdateUserAsync(AppUser user);
     }
 }
