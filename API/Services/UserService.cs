@@ -16,7 +16,7 @@ namespace API.Services
         {
             var users = await _userRepository.GetUsersAsync();
 
-            return users.Select(user => new MemberDto { Id = user.Id, Username = user.UserName });
+            return users.Select(user => new MemberDto { Id = user.Id, Username = user.UserName, Role = user.Role });
         }
 
         public async Task<MemberDto?> GetUserAsync(int id)
@@ -26,7 +26,7 @@ namespace API.Services
             if (user == null)
                 return null;
 
-            return new MemberDto { Id = user.Id, Username = user.UserName };
+            return new MemberDto { Id = user.Id, Username = user.UserName, Role=user.Role };
         }
     }
 }
