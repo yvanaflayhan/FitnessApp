@@ -38,6 +38,17 @@ namespace API.Controllers
             return Ok(user);
             
         }
+        [HttpPut("users/{id}")]
+        public async Task<ActionResult<MemberDto>> UpdateUser(int id, MemberUpdateDto updateDto)
+        {
+            var user = await _userService.UpdateUserAsync(id, updateDto);
+
+            if(user == null)
+                return NotFound();
+
+            return Ok(user);
+            
+        }
         
     }
 }
