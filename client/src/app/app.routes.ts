@@ -9,6 +9,7 @@ import { authGuard } from './_guards/auth-guard';
 import { TestError } from './errors/test-error/test-error';
 import { NotFound } from './errors/not-found/not-found';
 import { ServerError } from './errors/server-error/server-error';
+import { Admin } from './admin/admin';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -22,6 +23,7 @@ export const routes: Routes = [
             { path: 'trainers', component: Trainers },
             { path: 'bookings', component: Bookings },
             { path: 'profile', component: Profile },
+            { path: 'admin', component: Admin },
 
         ]
     },
