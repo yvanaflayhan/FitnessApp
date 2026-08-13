@@ -10,7 +10,7 @@ import { Home } from "./home/home";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, Nav, FormsModule, Home],
+  imports: [RouterOutlet, Nav, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

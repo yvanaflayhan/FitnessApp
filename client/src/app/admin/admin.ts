@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../_models/member';
 import { AdminService } from '../_services/admin';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })

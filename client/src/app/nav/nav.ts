@@ -15,17 +15,10 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })
-export class Nav implements OnInit{
+export class Nav {
   model: any ={}
-  loggedIn = false;
-  currentUser$: Observable<User | null> = of(null);
 
   constructor(public account: Account, private router: Router, private toastr: ToastrService) {}
-
-  ngOnInit(): void {
-    this.currentUser$ = this.account.currentUser$;
-  }
-
 
   login(){
     console.log(this.model);
