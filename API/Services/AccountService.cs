@@ -39,6 +39,7 @@ namespace API.Services
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
+                Role = user.Role,
             };
         }
 
@@ -63,6 +64,7 @@ namespace API.Services
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
+                Role = user.Role,
             };
         }
     }
