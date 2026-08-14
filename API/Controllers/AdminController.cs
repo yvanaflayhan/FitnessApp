@@ -89,7 +89,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("gyms/{id}")]
-        public async Task<ActionResult<Gym>> DeleteGym(int id)
+        public async Task<IActionResult> DeleteGym(int id)
         {
             var deletedGym = await _gymService.DeleteGymAsync(id);
             if (!deletedGym)

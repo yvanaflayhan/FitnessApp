@@ -17,7 +17,7 @@ import { AdminTrainers } from './admin/admin-trainers/admin-trainers';
 import { AdminBookings } from './admin/admin-bookings/admin-bookings';
 
 export const routes: Routes = [
-    { path: '', component: Home },
+    { path: '', component: Home, pathMatch: 'full' },
     //Normal User
     {
         path: '',

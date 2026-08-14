@@ -38,11 +38,11 @@ export class AdminService {
     return this.http.post<Gym>(this.baseUrl + '/gyms', gym);
   }
 
-  UpdateGym(id: number, gym: Gym){
+  updateGym(id: number, gym: Gym){
     return this.http.put<Gym>(this.baseUrl + '/gyms/' + id, gym);
   }
 
-  DeleteGym(id: number){
-    return this.http.delete<Gym>(this.baseUrl + '/gyms/' + id);
+  deleteGym(id: number){
+    return this.http.delete(this.baseUrl + '/gyms/' + id);
   }
 }
