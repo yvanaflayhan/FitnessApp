@@ -22,5 +22,40 @@ namespace API.Repositories
         {
             return await _context.Gyms.FindAsync(id);
         }
+
+        public async Task<Gym> AddGymAsync(Gym gym)
+        {
+            _context.Gyms.Add(gym);
+            await _context.SaveChangesAsync();
+            return gym;
+        }
+
+        public async Task<Gym?> UpdateGymAsync(int id, Gym gym)
+        {
+            var existingGym = await _context.Gyms.FindAsync(id);
+
+            if (existingGym == null)
+                return null;
+
+            existingGym.Name = gym.Name;
+            existingGym.Address = gym.Address;
+            existingGym.Latitude = gym.Latitude;
+            existingGym.Longitude = gym.Longitude;
+
+            await _context.SaveChangesAsync();
+            return existingGym;
+        }
+
+        public async Task<bool> DeleteGymAsync(int id)
+        {
+            var gym = await _context.Gyms.FindAsync(id);
+
+            if (gym == null)
+                return false;
+            
+            _context.Gyms.Remove(gym);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
