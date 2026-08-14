@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
+import { Gym } from '../_models/gym';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,25 @@ export class AdminService {
       this.baseUrl + '/users/' + id,
       member
     );
+  }
+
+  getGyms(){
+    return this.http.get<Gym[]>(this.baseUrl + '/gyms');
+  }
+
+  getGym(id: number){
+    return this.http.get<Gym>(this.baseUrl + '/gyms/' + id);
+  }
+
+  addGym(gym: Gym){
+    return this.http.post<Gym>(this.baseUrl + '/gyms', gym);
+  }
+
+  UpdateGym(id: number, gym: Gym){
+    return this.http.put<Gym>(this.baseUrl + '/gyms/' + id, gym);
+  }
+
+  DeleteGym(id: number){
+    return this.http.delete<Gym>(this.baseUrl + '/gyms/' + id);
   }
 }
