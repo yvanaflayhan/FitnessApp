@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
 import { Account } from '../_services/account';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
