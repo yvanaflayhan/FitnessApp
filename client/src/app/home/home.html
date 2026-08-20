@@ -1,18 +1,22 @@
 <div class="container mt-5">
-    <div *ngIf="!registerMode"  style="text-align: center;">
+    @if(!registerMode){
+    <div style="text-align: center;">
         <h1> Find the Right Gym & Trainer </h1>
-        <p class="lead"> Discover nearby gyms, connect with specialized trainers, and start your fitness journey today. </p>
+        <p class="lead"> Discover nearby gyms, connect with specialized trainers, and start your fitness journey today.
+        </p>
         <div class="text-center">
             <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2"> Get Started </button>
             <button class="btn btn-primary btn-info btn-lg "> Learn more </button>
         </div>
     </div>
-    <div *ngIf="registerMode" class="container">
+    }@else{
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-4">
                 <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
             </div>
         </div>
     </div>
+    }
 
 </div>

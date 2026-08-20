@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { Register } from "../register/register";
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, Register],
+  imports: [Register],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
