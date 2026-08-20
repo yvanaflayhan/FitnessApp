@@ -1,1 +1,16 @@
-<p>admin-gym-details works!</p>
+<div class="container mt-5">
+    @if(gym){
+    <h2>{{gym.name}}</h2>
+    <p><strong>Address:</strong> {{gym.address}}</p>
+    <p><strong>Location:</strong> {{gym.location}}</p>
+    <p><strong>Phone:</strong> {{gym.phone}}</p>
+    <p><strong>Opening:</strong> {{gym.openingHours}}</p>
+    <p><strong>Closing:</strong> {{gym.closingHours}}</p>
+    <p><strong>Description:</strong> {{gym.description}}</p>
+    <p><strong>Image:</strong> {{gym.imageUrl}}</p>
+    <p><strong>Social Media:</strong> {{gym.socialMedia}}</p>
+
+    }@else {
+        <p> Loading gym...</p>
+    }
+</div>

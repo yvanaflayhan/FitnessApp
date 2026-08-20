@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 import { Pagination } from '../../shared/pagination/pagination';
 import { HttpClient } from '@angular/common/http';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-admin-gyms',
-  imports: [FormsModule, Pagination],
+  imports: [FormsModule, Pagination, RouterLink],
   templateUrl: './admin-gyms.html',
   styleUrl: './admin-gyms.css',
 })
@@ -176,7 +177,7 @@ export class AdminGyms implements OnInit {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
-    
+
     const gymIcon = L.divIcon({
       html: '📍',
       className: 'gym-marker',
