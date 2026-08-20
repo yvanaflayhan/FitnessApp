@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.Entities;
 
 namespace API.Repositories
@@ -5,6 +6,7 @@ namespace API.Repositories
     public interface IUserRepository
     {
         Task<IEnumerable<AppUser>> GetUsersAsync();
+        Task<PagedResultDto<AppUser>> GetUsersPagedAsync(int pageNumber, int pageSize);
         Task<AppUser?> GetUserAsync(int id);
 
         Task<bool> UserExistsAsync(string username);
@@ -12,5 +14,6 @@ namespace API.Repositories
         Task<AppUser?> GetUserByUsernameAsync(string username);
 
         Task UpdateUserAsync(AppUser user);
+        Task <bool> DeleteUserAsync(int id); 
     }
 }

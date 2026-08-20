@@ -1,10 +1,11 @@
+using API.DTOs;
 using API.Entities;
 
 namespace API.Repositories
 {
     public interface IGymRepository
     {
-        Task<IEnumerable<Gym>> GetGymsAsync();
+        Task<PagedResultDto<Gym>> GetGymsAsync(int pageNumber, int pageSize);
         Task<Gym?> GetGymAsync(int id);
         Task <Gym> AddGymAsync(Gym gym);
         Task<Gym?> UpdateGymAsync(int id, Gym gym);

@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +14,22 @@ namespace API.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Gym>> GetGymsAsync()
+        public async Task<PagedResultDto<Gym>> GetGymsAsync(int pageNumber, int pageSize)
         {
-            return await _context.Gyms.ToListAsync();
+            var totalCount = await _context.Gyms.CountAsync();
+
+            var gyms = await _context.Gyms
+            .Skip((pageNumber -1)* pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+            return new PagedResultDto<Gym>
+            {
+                Items = gyms,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<Gym?> GetGymAsync(int id)
@@ -39,8 +53,15 @@ namespace API.Repositories
 
             existingGym.Name = gym.Name;
             existingGym.Address = gym.Address;
+            existingGym.Location = gym.Location;
             existingGym.Latitude = gym.Latitude;
             existingGym.Longitude = gym.Longitude;
+            existingGym.Phone = gym.Phone;
+            existingGym.OpeningHours = gym.OpeningHours;
+            existingGym.ClosingHours = gym.ClosingHours;
+            existingGym.Description = gym.Description;
+            existingGym.ImageUrl = gym.ImageUrl;
+            existingGym.SocialMedia = gym.SocialMedia;
 
             await _context.SaveChangesAsync();
             return existingGym;
@@ -52,7 +73,7 @@ namespace API.Repositories
 
             if (gym == null)
                 return false;
-            
+
             _context.Gyms.Remove(gym);
             await _context.SaveChangesAsync();
             return true;

@@ -25,9 +25,13 @@ namespace API.Controllers
         }
 
         [HttpGet("users")]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers(
+            int pageNumber = 1,
+            int pageSize = 10
+        )
         {
-            var users = await _userService.GetUsersAsync();
+            var users = await _userService.GetUsersPagedAsync(pageNumber, pageSize);
+
             return Ok(users);
         }
 
@@ -53,10 +57,22 @@ namespace API.Controllers
             return Ok(user);
         }
 
-        [HttpGet("gyms")]
-        public async Task<ActionResult<IEnumerable<Gym>>> GetGyms()
+        [HttpDelete("users/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var gyms = await _gymService.GetGymsAsync();
+            var deleted = await _userService.DeleteUserAsync(id);
+            if (!deleted)
+                return NotFound();
+            return NoContent();
+        }
+
+        [HttpGet("gyms")]
+        public async Task<ActionResult<PagedResultDto<Gym>>> GetGyms(
+            int pageNumber = 1,
+            int pageSize = 10
+        )
+        {
+            var gyms = await _gymService.GetGymsAsync(pageNumber, pageSize);
             return Ok(gyms);
         }
 

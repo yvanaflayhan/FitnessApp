@@ -1,5 +1,7 @@
+using API.DTOs;
 using API.Entities;
 using API.Repositories;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace API.Services
 {
@@ -12,9 +14,9 @@ namespace API.Services
             _gymRepository = gymRepository;
         }
 
-        public async Task<IEnumerable<Gym>> GetGymsAsync()
+        public async Task<PagedResultDto<Gym>> GetGymsAsync(int pageNumber, int pageSize)
         {
-            return await _gymRepository.GetGymsAsync();
+            return await _gymRepository.GetGymsAsync(pageNumber, pageSize);
         }
 
         public async Task<Gym?> GetGymAsync(int id)

@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,23 @@ namespace API.Repositories
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        public async Task<PagedResultDto<AppUser>> GetUsersPagedAsync(int pageNumber, int pageSize)
+        {
+            var totalCount = await _context.Users.CountAsync();
+            var users = await _context
+                .Users.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResultDto<AppUser>
+            {
+                Items = users,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+            };
         }
 
         public async Task<AppUser?> GetUserAsync(int id)
@@ -44,6 +62,19 @@ namespace API.Repositories
             _context.Entry(user).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteUserAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+                return false;
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
