@@ -1,16 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgFor } from '@angular/common';
 import { Nav } from "./nav/nav";
 import { FormsModule } from '@angular/forms';
 import { User } from './_models/user';
 import { Account } from './_services/account';
-import { Home } from "./home/home";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, Nav, FormsModule, Home],
+  imports: [RouterOutlet, Nav, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

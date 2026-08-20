@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using API.DTOs;
 using API.Entities;
-using API.Interfaces;
+using API.Repositories;
 
 namespace API.Services
 {
@@ -39,6 +39,7 @@ namespace API.Services
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
+                Role = user.Role,
             };
         }
 
@@ -63,6 +64,7 @@ namespace API.Services
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
+                Role = user.Role,
             };
         }
     }

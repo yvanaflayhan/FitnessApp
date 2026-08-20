@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -22,6 +23,7 @@ namespace API.Extensions
                         ),
                         ValidateIssuer = false,
                         ValidateAudience = false,
+                        RoleClaimType = ClaimTypes.Role
                     };
                 });
 

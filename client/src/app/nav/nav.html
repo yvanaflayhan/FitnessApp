@@ -3,46 +3,69 @@
         <a class="navbar-brand" routerLink="/" routerLinkActive="active">Fitness App</a>
 
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <ng-container *ngIf="account.currentUser$| async">
-                <li class="nav-item">
-                    <a class="nav-link active" routerLink="/home" routerLinkActive="active">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/gyms" routerLinkActive="active">Gyms</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/trainers" routerLinkActive="active">Trainers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/bookings" routerLinkActive="active">Bookings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/errors" routerLinkActive="active">Errors</a>
-                </li>
 
-            </ng-container>
-
-
+            @if (account.currentUser$ | async; as user) {
+            <li class="nav-item">
+                <a class="nav-link active" routerLink="/home" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Home</a>
+            </li>
+            @if (user.role !== 'Admin') {
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/gyms" routerLinkActive="active">Gyms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/trainers" routerLinkActive="active">Trainers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/bookings" routerLinkActive="active">Bookings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+            </li>
+            }
+            @if (user.role === 'Admin') {
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active"> Admin Dashboard </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/users" routerLinkActive="active"> Users </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/gyms" routerLinkActive="active"> Gyms </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/trainers" routerLinkActive="active"> Trainers </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/bookings" routerLinkActive="active"> Bookings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/errors" routerLinkActive="active">Errors</a>
+            </li>
+            }
+            }
         </ul>
 
-        <div class="dropdown" *ngIf="(account.currentUser$| async) as user" dropdown>
-            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle> Welcome {{user.username | titlecase}}</a>
+        @if (account.currentUser$ | async; as user) {
+
+        <div class="dropdown" dropdown>
+            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle> Welcome {{user.username |
+                titlecase}}</a>
             <div class="dropdown-menu mt-3" *dropdownMenu>
                 <a class="dropdown-item"> Edit Profile </a>
                 <a class="dropdown-item" (click)="logout()"> Logout </a>
             </div>
 
         </div>
-        <form *ngIf="!(account.currentUser$| async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()"
-            autocomplete="off">
+        }
+        @if (!(account.currentUser$ | async)) {
+        <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
             <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text"
                 placeholder="Username">
             <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password"
                 placeholder="Password">
             <button class="btn btn-danger" type="submit">Login</button>
         </form>
+        }
     </div>
 </nav>

@@ -18,6 +18,8 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IGymRepository, GymRepository>();
+builder.Services.AddScoped<IGymService, GymService>();
 
 var app = builder.Build();
 

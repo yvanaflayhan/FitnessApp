@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './_interceptors/error-interceptor';
+import { authInterceptor } from './_interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +15,7 @@ export const appConfig: ApplicationConfig = {
       positionClass: 'toast-bottom-right'
     }),
     provideHttpClient(
-      withInterceptors([errorInterceptor])
+      withInterceptors([authInterceptor, errorInterceptor])
     )
   ]
 };
