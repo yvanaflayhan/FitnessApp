@@ -66,7 +66,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Image</label>
-                    <input type="url" class="form-control" name="imageUrl" [(ngModel)]="newGym.imageUrl"
+                    <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)"
                         placeholder="https://example.com/gym.jpg">
                 </div>
 
@@ -210,8 +210,7 @@
                     <td class="text-wrap">{{ gym.name }}</td>
                     <td class="text-wrap">{{ gym.address }}</td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm"
-                        [routerLink]="['/admin/gyms', gym.id]">
+                        <button type="button" class="btn btn-info btn-sm" [routerLink]="['/admin/gyms', gym.id]">
                             See more details
                         </button>
                     </td>

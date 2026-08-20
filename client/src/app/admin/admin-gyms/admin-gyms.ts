@@ -16,6 +16,8 @@ import { RouterLink } from "@angular/router";
 export class AdminGyms implements OnInit {
   gyms: Gym[] = [];
 
+  selectedImage: File | null = null;
+
   currentPage = 1;
   pageSize = 10;
   totalCount = 0;
@@ -84,15 +86,46 @@ export class AdminGyms implements OnInit {
 
     this.isSaving = true;
 
-    console.log('GYM BEING SENT TO API:', this.newGym);
+    const formData = new FormData();
 
-    this.adminService.addGym(this.newGym).subscribe({
+    formData.append('name', this.newGym.name);
+    formData.append('address', this.newGym.address);
+    formData.append('location', this.newGym.location);
+    formData.append('latitude', this.newGym.latitude.toString());
+    formData.append('longitude', this.newGym.longitude.toString());
+
+    if (this.newGym.phone) {
+      formData.append('phone', this.newGym.phone);
+    }
+
+    if (this.newGym.openingHours) {
+      formData.append('openingHours', this.newGym.openingHours);
+    }
+
+    if (this.newGym.closingHours) {
+      formData.append('closingHours', this.newGym.closingHours);
+    }
+
+    if (this.newGym.description) {
+      formData.append('description', this.newGym.description);
+    }
+
+    if (this.newGym.socialMedia) {
+      formData.append('socialMedia', this.newGym.socialMedia);
+    }
+
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
+
+    this.adminService.addGym(formData).subscribe({
       next: gym => {
-        console.log('GYM RETURNED FROM API:', gym);
+        console.log('Gym returned from API:', gym);
 
         this.gyms.push(gym);
         this.showForm = false;
         this.resetNewGym();
+        this.selectedImage = null;
         this.isSaving = false;
 
         if (this.map) {
@@ -104,6 +137,7 @@ export class AdminGyms implements OnInit {
 
         this.changeDetector.detectChanges();
       },
+
       error: error => {
         console.error('Error adding gym:', error);
         this.isSaving = false;
@@ -244,5 +278,14 @@ export class AdminGyms implements OnInit {
         this.changeDetector.detectChanges();
       }
     });
+  }
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = input.files[0];
+
+      console.log('Selected image:', this.selectedImage);
+    }
   }
 }

@@ -10,8 +10,16 @@
     <p><strong>Opening:</strong> {{gym.openingHours}}</p>
     <p><strong>Closing:</strong> {{gym.closingHours}}</p>
     <p><strong>Description:</strong> {{gym.description}}</p>
-    <p><strong>Image:</strong> {{gym.imageUrl}}</p>
-    <p><strong>Social Media:</strong> {{gym.socialMedia}}</p>
+    @if (gym.imageUrl) {
+    <div class="mb-3">
+        <strong>Image:</strong>
+        <div class="mt-2">
+            <img [src]="gym.imageUrl" [alt]="gym.name" class="gym-image">
+        </div>
+    </div>
+    } @else {
+    <p><strong>Image:</strong> No image available</p>
+    } <p><strong>Social Media:</strong> {{gym.socialMedia}}</p>
 
     }@else {
     <p> Loading gym...</p>

@@ -1,0 +1,8 @@
+.gym-image {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
