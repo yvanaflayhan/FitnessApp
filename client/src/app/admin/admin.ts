@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Member } from '../_models/member';
 import { AdminService } from '../_services/admin';
 import { CommonModule } from '@angular/common';
@@ -10,19 +10,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './admin.css',
 })
 export class Admin implements OnInit {
-  users: Member[]=[];
+  users: Member[] = [];
 
-  constructor(private adminService: AdminService){}
+  constructor(private adminService: AdminService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadUsers();
   }
-  loadUsers(): void{
-    this.adminService.getUsers().subscribe({
-      next: users =>{
-        this.users = users;
+  loadUsers(): void {
+    this.adminService.getUsers(1, 10).subscribe({
+      next: result => {
+        this.users = result.items;
+        this.changeDetector.detectChanges();
       },
-      error: error =>{
+      error: error => {
         console.log(error);
       }
     });
