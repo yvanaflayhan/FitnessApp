@@ -5,7 +5,6 @@
     </div>
 
     @if (showForm) {
-    <p style="color: red;">TEST FORM</p>
     <div class="modal-backdrop-custom">
         <div class="gym-modal">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -21,17 +20,73 @@
 
                 <div class="mb-3">
                     <label class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" [(ngModel)]="newGym.address" required>
+                    <input type="text" class="form-control" name="address" [(ngModel)]="newGym.address"
+                        placeholder="Enter gym address" required>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Latitude</label>
-                    <input type="number" class="form-control" name="latitude" [(ngModel)]="newGym.latitude" required>
+                    <label class="form-label">Location</label>
+
+                    <div class="location-box">
+                        <div id="map"></div>
+                    </div>
+
+                    <small class="text-muted">
+                        Click on the map to select the gym location.
+                    </small>
+
+                    <input type="text" class="form-control mt-2" [value]="newGym.location"
+                        placeholder="Select a location on the map" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Longitude</label>
-                    <input type="number" class="form-control" name="longitude" [(ngModel)]="newGym.longitude" required>
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-control" name="phone" [(ngModel)]="newGym.phone"
+                        placeholder="+961 70 123 456" required>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label"> Opening Hours </label>
+                        <input type="time" class="form-control" name="openingHours" [(ngModel)]="newGym.openingHours"
+                            required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Closing Hours </label>
+                        <input type="time" class="form-control" name="closingHours" [(ngModel)]="newGym.closingHours"
+                            required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" rows="4" [(ngModel)]="newGym.description"
+                        placeholder="Tell users something about this gym..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Image</label>
+                    <input type="url" class="form-control" name="imageUrl" [(ngModel)]="newGym.imageUrl"
+                        placeholder="https://example.com/gym.jpg">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label"> Social Media </label>
+                    <input type="text" class="form-control" name="socialmedia" [(ngModel)]="newGym.socialMedia"
+                        placeholder="Instagram / Facebook">
+                </div>
+
+
+                <div class="location-coordinates">
+                    <div>
+                        <label class="form-label">Latitude</label>
+                        <input type="number" class="form-control" [value]="newGym.latitude" readonly>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Longitude</label>
+                        <input type="number" class="form-control" [value]="newGym.longitude" readonly>
+                    </div>
                 </div>
 
                 <div class="text-end">
@@ -66,6 +121,37 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label"> Location </label>
+                    <input type="text" class="form-control" name="editAddress" [(ngModel)]="editingGym.location"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+
+                    <input type="tel" class="form-control" name="editPhone" [(ngModel)]="editingGym.phone"
+                        placeholder="+961 70 123 456" required>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Opening Hours</label>
+
+                        <input type="time" class="form-control" name="editOpeningHours"
+                            [(ngModel)]="editingGym.openingHours" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Closing Hours</label>
+
+                        <input type="time" class="form-control" name="editClosingHours"
+                            [(ngModel)]="editingGym.closingHours" required>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Latitude</label>
                     <input type="number" class="form-control" name="editLatitude" [(ngModel)]="editingGym.latitude"
                         required>
@@ -75,6 +161,25 @@
                     <label class="form-label">Longitude</label>
                     <input type="number" class="form-control" name="editLongitude" [(ngModel)]="editingGym.longitude"
                         required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+
+                    <textarea class="form-control" name="editDescription" rows="4" [(ngModel)]="editingGym.description">
+                </textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image</label>
+
+                    <input type="url" class="form-control" name="editImageUrl" [(ngModel)]="editingGym.imageUrl"
+                        placeholder="https://example.com/gym.jpg" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Social Media</label>
+
+                    <input type="text" class="form-control" name="editSocialMedia" [(ngModel)]="editingGym.socialMedia"
+                        placeholder="Instagram / Facebook" required>
                 </div>
 
                 <div class="text-end">
@@ -92,8 +197,9 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Address</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
+                <th>Location</th>
+                <th>Phone</th>
+                <th>Hours</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -104,8 +210,11 @@
                 <td>{{ gym.id }}</td>
                 <td>{{ gym.name }}</td>
                 <td>{{ gym.address }}</td>
-                <td>{{ gym.latitude }}</td>
-                <td>{{ gym.longitude }}</td>
+                <td>{{ gym.location}}</td>
+                <td>{{ gym.phone }}</td>
+                <td>
+                    {{ gym.openingHours }} - {{ gym.closingHours }}
+                </td>
                 <td class="text-nowrap">
                     <button type="button" class="btn btn-primary btn-sm me-2" (click)="editGym(gym)">Edit</button>
                     <button type="button" class="btn btn-danger btn-sm" (click)="deleteGym(gym.id)">Delete</button>
@@ -114,4 +223,6 @@
             }
         </tbody>
     </table>
+    <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChanged)="changePage($event)">
+    </app-pagination>
 </div>

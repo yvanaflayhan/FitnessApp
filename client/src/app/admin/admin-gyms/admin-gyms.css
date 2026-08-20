@@ -4,11 +4,18 @@
     -webkit-font-smoothing: antialiased;
 }
 
+/* =========================
+   PAGE
+   ========================= */
+
 .container {
-    max-width: 1500px;
+    max-width: 1200px;
 }
 
-/* Header */
+/* =========================
+   HEADER
+   ========================= */
+
 h2 {
     font-weight: 600;
     font-size: 1.65rem;
@@ -16,11 +23,18 @@ h2 {
     color: #212529;
 }
 
+/* =========================
+   BUTTONS
+   ========================= */
+
 .btn {
     font-weight: 500;
     border-radius: 8px;
     padding: 0.5rem 1.1rem;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background-color 0.15s ease;
 }
 
 .btn-success {
@@ -32,52 +46,19 @@ h2 {
     box-shadow: 0 4px 10px rgba(25, 135, 84, 0.25);
 }
 
-/* Add form card */
-.card {
-    border: 1px solid #eceef0;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+.btn-sm {
+    padding: 0.3rem 0.75rem;
+    font-size: 0.82rem;
+    border-radius: 6px;
 }
 
-.card-body {
-    padding: 1.75rem;
-}
+/* =========================
+   TABLE
+   ========================= */
 
-.card h4 {
-    font-weight: 600;
-    font-size: 1.15rem;
-    margin-bottom: 1.25rem;
-}
-
-.form-label {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #6c757d;
-    margin-bottom: 0.3rem;
-}
-
-.form-control {
-    border-radius: 8px;
-    border-color: #dee2e6;
-    padding: 0.55rem 0.8rem;
-}
-
-.form-control:focus {
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
-}
-
-.mb-3 {
-    margin-bottom: 1.1rem !important;
-}
-
-.card .btn-primary,
-.card .btn-secondary {
-    padding: 0.5rem 1.25rem;
-    border-radius: 8px;
-}
-
-/* Table */
 .table {
+    width: 100%;
+    table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
     background: #fff;
@@ -95,6 +76,7 @@ thead th {
     background: #f8f9fa;
     border-bottom: 1px solid #eceef0 !important;
     padding: 0.85rem 1rem;
+    text-align: center;
 }
 
 tbody th,
@@ -102,6 +84,7 @@ tbody td {
     padding: 0.85rem 1rem;
     vertical-align: middle;
     border-bottom: 1px solid #f1f2f4;
+    text-align: center;
 }
 
 tbody tr:last-child th,
@@ -117,50 +100,185 @@ tbody tr {
     background-color: #f8f9fa;
 }
 
-.btn-sm {
-    padding: 0.3rem 0.75rem;
-    font-size: 0.82rem;
-    border-radius: 6px;
-}
+/* =========================
+   MODAL BACKDROP
+   ========================= */
 
-.container {
-    max-width: 1200px;
-    /* was 960px */
-}
-
-.table {
-    width: 100%;
-    table-layout: fixed;
-}
-
-thead th,
-tbody th,
-tbody td {
-    text-align: center;
-}
-
-thead th:last-child,
-tbody td:last-child {
-    text-align: center;
-    /* keep Actions centered too */
-}
 .modal-backdrop-custom {
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
+
+    padding: 20px;
+
     background-color: rgba(0, 0, 0, 0.5);
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     z-index: 1050;
 }
+
+/* =========================
+   MODAL
+   ========================= */
+
 .gym-modal {
     background-color: white;
-    width: 500px;
-    max-width: 90%;
+
+    width: 900px;
+    max-width: 95%;
+
+    max-height: 90vh;
+    overflow-y: auto;
+
     padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.gym-modal h4 {
+    font-weight: 600;
+    color: #212529;
+    margin: 0;
+}
+
+/* =========================
+   FORM
+   ========================= */
+
+.gym-modal .form-label {
+    display: block;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    color: #495057;
+
+    margin-bottom: 6px;
+}
+
+.gym-modal .form-control {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+
+    font-size: 0.95rem;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.gym-modal .form-control:focus {
+    border-color: #86b7fe;
+
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+
+    outline: none;
+}
+
+.gym-modal textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.gym-modal .mb-3 {
+    margin-bottom: 18px !important;
+}
+
+/* =========================
+   MODAL BUTTONS
+   ========================= */
+
+.gym-modal .btn {
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 500;
+}
+
+.gym-modal .btn-close {
+    padding: 10px;
+}
+
+/* =========================
+   LOCATION / MAP
+   ========================= */
+
+.location-box {
+    width: 100%;
+    height: 300px;
+
+    border: 1px solid #dee2e6;
     border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+
+    overflow: hidden;
+
+    position: relative;
+
+    background-color: #f8f9fa;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+
+    min-height: 300px;
+}
+
+/* Latitude + Longitude */
+
+.location-coordinates {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    margin-top: 12px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .gym-modal {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 20px;
+    }
+
+    .location-coordinates {
+        grid-template-columns: 1fr;
+    }
+
+    .location-box {
+        height: 250px;
+    }
+
+    #map {
+        min-height: 250px;
+    }
+}
+
+.gym-marker {
+    background: transparent;
+    border: none;
+    font-size: 35px;
+    line-height: 40px;
+    text-align: center;
 }

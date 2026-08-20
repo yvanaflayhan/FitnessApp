@@ -1,0 +1,12 @@
+.pagination {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.page-link {
+    cursor: pointer;
+}
+
+.page-item.disabled .page-link {
+    cursor: not-allowed;
+}
