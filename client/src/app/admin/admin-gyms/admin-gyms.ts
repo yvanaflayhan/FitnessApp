@@ -4,6 +4,7 @@ import { Gym } from '../../_models/gym';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 import { Pagination } from '../../shared/pagination/pagination';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-gyms',
@@ -42,7 +43,7 @@ export class AdminGyms implements OnInit {
     socialMedia: ''
   };
 
-  constructor(private adminService: AdminService, private changeDetector: ChangeDetectorRef) { }
+  constructor(private adminService: AdminService, private changeDetector: ChangeDetectorRef, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadGyms();
@@ -175,8 +176,7 @@ export class AdminGyms implements OnInit {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
-
-    // Create our own emoji marker
+    
     const gymIcon = L.divIcon({
       html: '📍',
       className: 'gym-marker',
@@ -189,20 +189,13 @@ export class AdminGyms implements OnInit {
 
       const latitude = event.latlng.lat;
       const longitude = event.latlng.lng;
-
-      // Save coordinates
       this.newGym.latitude = latitude;
       this.newGym.longitude = longitude;
 
-
-      this.newGym.location = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-
-      // Remove previous marker
+      this.getLocationName(latitude, longitude);
       if (this.marker) {
         this.marker.remove();
       }
-
-      // Create marker exactly where user clicked
       this.marker = L.marker(
         [latitude, longitude],
         {
@@ -210,17 +203,45 @@ export class AdminGyms implements OnInit {
         }
       ).addTo(this.map!);
 
-      // Optional popup
       this.marker
         .bindPopup('Gym location')
         .openPopup();
 
       this.changeDetector.detectChanges();
     });
-
-    // Important because the map is inside a modal
     setTimeout(() => {
       this.map?.invalidateSize();
     }, 200);
+  }
+  getLocationName(latitude: number, longitude: number): void {
+    const url = 'https://nominatim.openstreetmap.org/reverse';
+
+    this.http.get<any>(url, {
+      params: {
+        lat: latitude,
+        lon: longitude,
+        format: 'jsonv2',
+        addressdetails: 1,
+        zoom: 18,
+        'accept-language': 'en'
+      }
+    }).subscribe({
+      next: result => {
+        console.log('LOCATION RESULT:', result);
+
+        this.newGym.location = result.display_name;
+
+        this.changeDetector.detectChanges();
+      },
+
+      error: error => {
+        console.error('Error getting location:', error);
+
+        this.newGym.location =
+          `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+
+        this.changeDetector.detectChanges();
+      }
+    });
   }
 }
