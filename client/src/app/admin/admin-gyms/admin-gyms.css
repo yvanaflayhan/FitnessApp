@@ -282,3 +282,28 @@ tbody tr {
 .table td:nth-child(5) {
     min-width: 180px;
 }
+
+.details-button {
+    background: none;
+    border: none;
+    padding: 0;
+
+    color: #1f8dbf;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.details-button:hover {
+    background: none;
+    color: #1e3a5f;
+    transform: translateX(3px);
+}
+
+.details-button:focus {
+    outline: none;
+    box-shadow: none;
+}

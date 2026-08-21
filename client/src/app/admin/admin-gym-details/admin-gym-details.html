@@ -1,25 +1,85 @@
 <div class="container mt-5">
+
     <button type="button" class="btn btn-secondary mb-3" (click)="goBack()">
         ← Back to Gyms
     </button>
+
     @if(gym){
-    <h2>{{gym.name}}</h2>
-    <p><strong>Address:</strong> {{gym.address}}</p>
-    <p><strong>Location:</strong> {{gym.location}}</p>
-    <p><strong>Phone:</strong> {{gym.phone}}</p>
-    <p><strong>Opening:</strong> {{gym.openingHours}}</p>
-    <p><strong>Closing:</strong> {{gym.closingHours}}</p>
-    <p><strong>Description:</strong> {{gym.description}}</p>
-    @if (gym.imageUrl) {
-    <div class="mb-3">
-        <strong>Image:</strong>
-        <div class="mt-2">
-            <img [src]="gym.imageUrl" [alt]="gym.name" class="gym-image">
+    <div class="gym-card">
+        @if(gym.imageUrl){
+        <div class="gym-image-container">
+            <img [src]="gym.imageUrl" [alt]="gym.name" class="gym-image" />
+        </div>
+        }@else {
+        <div class="no-image">
+            <span>🏋️</span>
+            <p>No image available </p>
+        </div>
+        }
+        <div class="gym-header">
+            <h1>{{ gym.name }}</h1>
+
+            <div class="gym-address">
+                📍 {{ gym.address }}
+            </div>
+        </div>
+        <div class="section">
+            <h3>Gym Information</h3>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Location</span>
+                    <span class="info-value">
+                        {{ gym.location || 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value">
+                        {{ gym.phone || 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Opening Hours</span>
+                    <span class="info-value">
+                        {{ gym.openingHours || 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Closing Hours</span>
+                    <span class="info-value">
+                        {{ gym.closingHours || 'Not provided' }}
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="section">
+
+            <h3>About This Gym</h3>
+
+            <p class="description">
+                {{ gym.description || 'No description provided.' }}
+            </p>
+
+        </div>
+        <div class="section">
+
+            <h3>Social Media</h3>
+
+            @if (gym.socialMedia) {
+            <a [href]="gym.socialMedia" target="_blank" rel="noopener noreferrer" class="social-link">
+                Visit Gym Social Media
+            </a>
+            } @else {
+            <p class="text-muted">No social media account provided.</p>
+            }
+
         </div>
     </div>
-    } @else {
-    <p><strong>Image:</strong> No image available</p>
-    } <p><strong>Social Media:</strong> {{gym.socialMedia}}</p>
 
     }@else {
     <p> Loading gym...</p>

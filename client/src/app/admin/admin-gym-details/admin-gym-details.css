@@ -1,8 +1,419 @@
+/* =========================================================
+   GYM DETAIL PAGE
+   Clean style matching the FitnessApp admin dashboard
+   ========================================================= */
+
+:host {
+  display: block;
+}
+
+/* ---------- Colors ---------- */
+
+:root {
+  --navy: #1e3a5f;
+  --navy-light: #35618f;
+  --sky: #29a8e0;
+  --sky-dark: #1f8dbf;
+
+  --page-bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --border: #e2e7ec;
+
+  --text: #263746;
+  --text-light: #687785;
+}
+
+/* ---------- Main page ---------- */
+
+.container.mt-5 {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.btn.btn-secondary.mb-3 {
+  background: white;
+  border: 1px solid #d7dee5;
+  color: var(--navy);
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+
+  transition: all 0.2s ease;
+}
+
+.btn.btn-secondary.mb-3:hover {
+  background: #f0f7fc;
+  border-color: var(--sky);
+  color: var(--sky-dark);
+
+  transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   GYM CARD
+   ========================================================= */
+
+.gym-card {
+  width: 100%;
+}
+
+
+/* =========================================================
+   IMAGE
+   Keep the image simple — no large gray container
+   ========================================================= */
+
+.gym-image-container {
+  width: auto;
+  height: auto;
+
+  overflow: visible;
+  background: transparent;
+
+  border-radius: 0;
+
+  margin-bottom: 1.5rem;
+}
+
 .gym-image {
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+
+  object-fit: cover;
+
+  display: block;
+  margin: 0 auto;
+
+  border-radius: 10px;
+
+  border: 1px solid var(--border);
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   NO IMAGE
+   ========================================================= */
+
+.no-image {
+  width: 100%;
+  height: 300px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  background: #f1f4f7;
+
+  color: var(--text-light);
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.no-image span {
+  font-size: 2.5rem;
+  opacity: 0.7;
+}
+
+.no-image p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   GYM HEADER
+   ========================================================= */
+
+.gym-header {
+  background: linear-gradient(135deg,
+      var(--navy),
+      var(--navy-light));
+
+  color: white;
+
+  padding: 1.5rem 1.75rem;
+
+  border-radius: 10px;
+
+  margin-bottom: 1.5rem;
+
+  box-shadow: 0 3px 8px rgba(30, 58, 95, 0.15);
+}
+
+.gym-header h1 {
+  margin: 0 0 0.5rem;
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  color: white;
+}
+
+.gym-address {
+  font-size: 0.95rem;
+  color: #3b3c3c;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.section {
+  background: white;
+
+  padding: 1.5rem;
+
+  margin-bottom: 1.25rem;
+
+  border: 1px solid var(--border);
+
+  border-radius: 10px;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.section h3 {
+  margin: 0 0 1.25rem;
+
+  padding-bottom: 0.75rem;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+
+  color: var(--navy);
+
+  border-bottom: 2px solid #eaf5fb;
+}
+
+
+/* =========================================================
+   GYM INFORMATION CARDS
+   ========================================================= */
+
+.info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 1rem;
+}
+
+.info-item {
+  background: #f8fafc;
+
+  border: 1px solid var(--border);
+
+  border-left: 4px solid var(--sky);
+
+  border-radius: 8px;
+
+  padding: 1rem 1.1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.4rem;
+
+  transition: all 0.2s ease;
+}
+
+.info-item:hover {
+  border-color: #cbdde8;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+
+  transform: translateY(-1px);
+}
+
+
+/* Label */
+
+.info-label {
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+
+  color: var(--text-light);
+}
+
+
+/* IMPORTANT:
+   Force information text to be dark/visible
+*/
+
+.info-value {
+  font-size: 0.95rem;
+
+  font-weight: 600;
+
+  color: #263746 !important;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   ABOUT THIS GYM
+   ========================================================= */
+
+.description {
+  margin: 0;
+
+  font-size: 0.95rem;
+
+  line-height: 1.7;
+
+  color: #3f4f5d;
+
+  white-space: pre-line;
+}
+
+
+/* =========================================================
+   SOCIAL MEDIA
+   ========================================================= */
+
+.social-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 0.65rem 1.2rem;
+
+  background: var(--sky);
+
+  color: white;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  border-radius: 6px;
+
+  transition: all 0.2s ease;
+
+  box-shadow: 0 2px 5px rgba(41, 168, 224, 0.2);
+}
+
+.social-link:hover {
+  background: var(--sky-dark);
+
+  color: white;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 8px rgba(41, 168, 224, 0.25);
+}
+
+
+/* =========================================================
+   NO SOCIAL MEDIA
+   ========================================================= */
+
+.text-muted {
+  margin: 0;
+
+  color: #687785 !important;
+
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.container.mt-5>p {
+  text-align: center;
+
+  color: var(--text-light);
+
+  margin-top: 4rem;
+
+  font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .container.mt-5 {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gym-header {
+    padding: 1.25rem;
+  }
+
+  .gym-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .section {
+    padding: 1.25rem;
+  }
+
+  .gym-image {
     width: 100%;
-    max-width: 500px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 12px;
-    display: block;
+    height: 250px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .btn.btn-secondary.mb-3,
+  .social-link,
+  .info-item {
+    transition: none;
+  }
+}
+
+.info-value {
+  color: #263746 !important;
 }
