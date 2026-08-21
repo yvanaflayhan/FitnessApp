@@ -1,0 +1,15 @@
+.hero-warm {
+  background: linear-gradient(
+    135deg,
+    var(--bs-tertiary-bg) 0%,
+    var(--bs-primary-bg-subtle) 100%
+  );
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
