@@ -85,6 +85,9 @@ namespace API.Services
                 Specialization = requestDto.Specialization,
                 Description = requestDto.Description,
                 YearsOfExperience = requestDto.YearsOfExperience,
+                GymId = requestDto.GymId,
+                OtherGymName = requestDto.OtherGymName,
+                WorksIndependently = requestDto.WorksIndependently,
                 Status = "Pending",
             };
 

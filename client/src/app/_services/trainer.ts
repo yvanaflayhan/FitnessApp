@@ -23,4 +23,8 @@ export class TrainerService{
         );
     }
 
+    submitTrainerRequest(request: TrainerRequest){
+        return this.http.post(`${this.baseUrl}/request`, request);
+    }
+
 }

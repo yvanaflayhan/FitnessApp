@@ -38,6 +38,13 @@ namespace API.Data
                 .HasOne(tg => tg.Gym)
                 .WithMany(g => g.TrainerGyms)
                 .HasForeignKey(tg => tg.GymId);
+
+            modelBuilder
+                .Entity<TrainerRequest>()
+                .HasOne(tr => tr.Gym)
+                .WithMany()
+                .HasForeignKey(tr => tr.GymId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
