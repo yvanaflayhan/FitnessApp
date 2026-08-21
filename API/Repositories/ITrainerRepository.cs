@@ -6,5 +6,8 @@ namespace API.Repositories
     {
         Task<TrainerRequest> AddTrainerRequestAsync(TrainerRequest request);
         Task<IEnumerable<TrainerRequest>> GetTrainerRequestsAsync();
+        Task<TrainerRequest?> GetTrainerRequestAsync(int id);
+        Task AddTrainerAsync(Trainer trainer);
+        Task<TrainerRequest?> GetPendingRequestByUserIdAsync(int userId);
     }
 }

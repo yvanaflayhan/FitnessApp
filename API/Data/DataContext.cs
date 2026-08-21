@@ -22,7 +22,7 @@ namespace API.Data
                 .Entity<Trainer>()
                 .HasOne(t => t.User)
                 .WithOne()
-                .HasForeignKey<Trainer>(t => t.userId)
+                .HasForeignKey<Trainer>(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TrainerGym>().HasKey(tg => new { tg.TrainerId, tg.GymId });

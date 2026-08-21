@@ -20,6 +20,11 @@ namespace API.Controllers
         public async Task<ActionResult<TrainerRequest>> CreateTrainerRequest(TrainerRequest request)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var hasPendingRequest = await _trainerService.HasPendingTrainerRequestAsync(userId);
+
+            if (hasPendingRequest)
+                return BadRequest("You already have a pending trainer request.");
             request.UserId = userId;
             request.Status = "Pending";
 
