@@ -12,6 +12,7 @@ namespace API.Data
 
         public DbSet<AppUser> Users {get; set;}
         public DbSet<Gym> Gyms {get; set;}
+        public DbSet<TrainerRequest> TrainerRequests {get; set;}
         
     }
 }
