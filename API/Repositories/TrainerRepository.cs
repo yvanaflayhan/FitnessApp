@@ -42,5 +42,13 @@ namespace API.Repositories
                 r.UserId == userId && r.Status == "Pending"
             );
         }
+
+        public async Task<IEnumerable<Trainer>> GetTrainersAsync()
+        {
+            return await _context
+                .Trainers.Include(t => t.User)
+                .Where(t => t.IsApproved)
+                .ToListAsync();
+        }
     }
 }

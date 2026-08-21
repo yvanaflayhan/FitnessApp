@@ -16,6 +16,14 @@ namespace API.Controllers
             _trainerService = trainerService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Trainer>>> GetTrainers()
+        {
+            var trainers = await _trainerService.GetTrainersAsync();
+
+            return Ok(trainers);
+        }
+
         [HttpPost("request")]
         public async Task<ActionResult<TrainerRequest>> CreateTrainerRequest(TrainerRequest request)
         {

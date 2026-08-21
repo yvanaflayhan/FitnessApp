@@ -1,0 +1,26 @@
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Trainer } from "../_models/trainer";
+import { TrainerRequest } from "../_models/trainer-request";
+@Injectable({
+    providedIn: 'root'
+})
+export class TrainerService{
+    private baseUrl = 'http://localhost:5001/api/trainer';
+
+    constructor(private http: HttpClient){ }
+
+    createTrainerRequest(request: TrainerRequest){
+        return this.http.post<TrainerRequest>(
+            this.baseUrl + '/request',
+            request
+        );
+    }
+
+    getTrainers(){
+        return this.http.get<Trainer[]>(
+            this.baseUrl
+        );
+    }
+
+}

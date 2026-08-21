@@ -65,5 +65,10 @@ namespace API.Services
 
             return request != null;
         }
+
+        public async Task<IEnumerable<Trainer>> GetTrainersAsync()
+        {
+            return await _trainerRepository.GetTrainersAsync();
+        }
     }
 }
