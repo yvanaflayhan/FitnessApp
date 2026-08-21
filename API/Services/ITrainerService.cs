@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.Entities;
 
 namespace API.Services
@@ -9,5 +10,6 @@ namespace API.Services
         Task<bool> ApproveTrainerRequestAsync(int id);
         Task<bool> HasPendingTrainerRequestAsync(int userId);
         Task<IEnumerable<Trainer>> GetTrainersAsync();
+        Task<bool> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto);
     }
 }

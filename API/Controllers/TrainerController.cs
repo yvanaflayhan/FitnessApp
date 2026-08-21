@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using API.DTOs;
 using API.Entities;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -25,20 +26,21 @@ namespace API.Controllers
         }
 
         [HttpPost("request")]
-        public async Task<ActionResult<TrainerRequest>> CreateTrainerRequest(TrainerRequest request)
+        public async Task<ActionResult> SubmitTrainerRequest(TrainerRequestDto requestDto)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var hasPendingRequest = await _trainerService.HasPendingTrainerRequestAsync(userId);
+            if (userIdClaim == null)
+                return Unauthorized();
 
-            if (hasPendingRequest)
+            var userId = int.Parse(userIdClaim);
+
+            var result = await _trainerService.SubmitTrainerRequestAsync(userId, requestDto);
+
+            if (!result)
                 return BadRequest("You already have a pending trainer request.");
-            request.UserId = userId;
-            request.Status = "Pending";
 
-            var createdRequest = await _trainerService.CreateTrainerRequestAsync(request);
-
-            return Ok(createdRequest);
+            return Ok(new { message = "Trainer request submitted successfully." });
         }
     }
 }

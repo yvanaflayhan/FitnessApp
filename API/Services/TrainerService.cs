@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using API.DTOs;
 using API.Entities;
 using API.Repositories;
 
@@ -69,6 +70,27 @@ namespace API.Services
         public async Task<IEnumerable<Trainer>> GetTrainersAsync()
         {
             return await _trainerRepository.GetTrainersAsync();
+        }
+
+        public async Task<bool> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto)
+        {
+            var existingRequest = await _trainerRepository.GetPendingRequestByUserIdAsync(userId);
+
+            if (existingRequest != null)
+                return false;
+
+            var request = new TrainerRequest
+            {
+                UserId = userId,
+                Specialization = requestDto.Specialization,
+                Description = requestDto.Description,
+                YearsOfExperience = requestDto.YearsOfExperience,
+                Status = "Pending",
+            };
+
+            await _trainerRepository.AddTrainerRequestAsync(request);
+
+            return true;
         }
     }
 }

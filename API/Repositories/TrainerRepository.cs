@@ -50,5 +50,6 @@ namespace API.Repositories
                 .Where(t => t.IsApproved)
                 .ToListAsync();
         }
+
     }
 }
