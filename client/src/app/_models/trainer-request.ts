@@ -5,5 +5,8 @@ export interface TrainerRequest
     specialization: string;
     description?: string;
     yearsOfExperience?: number;
+    gymId?: number;
+    otherGymName?: string;
+    worksIndependently: boolean;
     status?: string;
 }
