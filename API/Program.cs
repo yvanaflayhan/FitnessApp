@@ -23,6 +23,8 @@ builder.Services.AddScoped<IGymService, GymService>();
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));

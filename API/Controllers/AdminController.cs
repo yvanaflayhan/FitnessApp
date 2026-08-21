@@ -88,8 +88,24 @@ namespace API.Controllers
         }
 
         [HttpPost("gyms")]
-        public async Task<ActionResult<Gym>> AddGym(Gym gym)
+        public async Task<ActionResult<Gym>> AddGym([FromForm] Gym gym, IFormFile? image)
         {
+            if (image != null && image.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "images",
+                    "gyms"
+                );
+                Directory.CreateDirectory(uploadsFolder);
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await image.CopyToAsync(stream);
+
+                gym.ImageUrl = $"https://localhost:5001/images/gyms/{fileName}";
+            }
             var createdGym = await _gymService.AddGymAsync(gym);
             return Ok(createdGym);
         }

@@ -1,0 +1,87 @@
+<div class="container mt-5">
+
+    <button type="button" class="btn btn-secondary mb-3" (click)="goBack()">
+        ← Back to Gyms
+    </button>
+
+    @if(gym){
+    <div class="gym-card">
+        @if(gym.imageUrl){
+        <div class="gym-image-container">
+            <img [src]="gym.imageUrl" [alt]="gym.name" class="gym-image" />
+        </div>
+        }@else {
+        <div class="no-image">
+            <span>🏋️</span>
+            <p>No image available </p>
+        </div>
+        }
+        <div class="gym-header">
+            <h1>{{ gym.name }}</h1>
+
+            <div class="gym-address">
+                📍 {{ gym.address }}
+            </div>
+        </div>
+        <div class="section">
+            <h3>Gym Information</h3>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Location</span>
+                    <span class="info-value">
+                        {{ gym.location || 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value">
+                        {{ gym.phone || 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Opening Hours</span>
+                    <span class="info-value">
+                        {{ gym.openingHours || 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Closing Hours</span>
+                    <span class="info-value">
+                        {{ gym.closingHours || 'Not provided' }}
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="section">
+
+            <h3>About This Gym</h3>
+
+            <p class="description">
+                {{ gym.description || 'No description provided.' }}
+            </p>
+
+        </div>
+        <div class="section">
+
+            <h3>Social Media</h3>
+
+            @if (gym.socialMedia) {
+            <a [href]="gym.socialMedia" target="_blank" rel="noopener noreferrer" class="social-link">
+                Visit Gym Social Media
+            </a>
+            } @else {
+            <p class="text-muted">No social media account provided.</p>
+            }
+
+        </div>
+    </div>
+
+    }@else {
+    <p> Loading gym...</p>
+    }
+</div>

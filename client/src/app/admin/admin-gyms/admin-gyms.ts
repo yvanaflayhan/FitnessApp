@@ -4,15 +4,19 @@ import { Gym } from '../../_models/gym';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 import { Pagination } from '../../shared/pagination/pagination';
+import { HttpClient } from '@angular/common/http';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-admin-gyms',
-  imports: [FormsModule, Pagination],
+  imports: [FormsModule, Pagination, RouterLink],
   templateUrl: './admin-gyms.html',
   styleUrl: './admin-gyms.css',
 })
 export class AdminGyms implements OnInit {
   gyms: Gym[] = [];
+
+  selectedImage: File | null = null;
 
   currentPage = 1;
   pageSize = 10;
@@ -42,7 +46,7 @@ export class AdminGyms implements OnInit {
     socialMedia: ''
   };
 
-  constructor(private adminService: AdminService, private changeDetector: ChangeDetectorRef) { }
+  constructor(private adminService: AdminService, private changeDetector: ChangeDetectorRef, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadGyms();
@@ -82,15 +86,46 @@ export class AdminGyms implements OnInit {
 
     this.isSaving = true;
 
-    console.log('GYM BEING SENT TO API:', this.newGym);
+    const formData = new FormData();
 
-    this.adminService.addGym(this.newGym).subscribe({
+    formData.append('name', this.newGym.name);
+    formData.append('address', this.newGym.address);
+    formData.append('location', this.newGym.location);
+    formData.append('latitude', this.newGym.latitude.toString());
+    formData.append('longitude', this.newGym.longitude.toString());
+
+    if (this.newGym.phone) {
+      formData.append('phone', this.newGym.phone);
+    }
+
+    if (this.newGym.openingHours) {
+      formData.append('openingHours', this.newGym.openingHours);
+    }
+
+    if (this.newGym.closingHours) {
+      formData.append('closingHours', this.newGym.closingHours);
+    }
+
+    if (this.newGym.description) {
+      formData.append('description', this.newGym.description);
+    }
+
+    if (this.newGym.socialMedia) {
+      formData.append('socialMedia', this.newGym.socialMedia);
+    }
+
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
+
+    this.adminService.addGym(formData).subscribe({
       next: gym => {
-        console.log('GYM RETURNED FROM API:', gym);
+        console.log('Gym returned from API:', gym);
 
         this.gyms.push(gym);
         this.showForm = false;
         this.resetNewGym();
+        this.selectedImage = null;
         this.isSaving = false;
 
         if (this.map) {
@@ -102,6 +137,7 @@ export class AdminGyms implements OnInit {
 
         this.changeDetector.detectChanges();
       },
+
       error: error => {
         console.error('Error adding gym:', error);
         this.isSaving = false;
@@ -176,7 +212,6 @@ export class AdminGyms implements OnInit {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
 
-    // Create our own emoji marker
     const gymIcon = L.divIcon({
       html: '📍',
       className: 'gym-marker',
@@ -189,20 +224,13 @@ export class AdminGyms implements OnInit {
 
       const latitude = event.latlng.lat;
       const longitude = event.latlng.lng;
-
-      // Save coordinates
       this.newGym.latitude = latitude;
       this.newGym.longitude = longitude;
 
-
-      this.newGym.location = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-
-      // Remove previous marker
+      this.getLocationName(latitude, longitude);
       if (this.marker) {
         this.marker.remove();
       }
-
-      // Create marker exactly where user clicked
       this.marker = L.marker(
         [latitude, longitude],
         {
@@ -210,17 +238,54 @@ export class AdminGyms implements OnInit {
         }
       ).addTo(this.map!);
 
-      // Optional popup
       this.marker
         .bindPopup('Gym location')
         .openPopup();
 
       this.changeDetector.detectChanges();
     });
-
-    // Important because the map is inside a modal
     setTimeout(() => {
       this.map?.invalidateSize();
     }, 200);
+  }
+  getLocationName(latitude: number, longitude: number): void {
+    const url = 'https://nominatim.openstreetmap.org/reverse';
+
+    this.http.get<any>(url, {
+      params: {
+        lat: latitude,
+        lon: longitude,
+        format: 'jsonv2',
+        addressdetails: 1,
+        zoom: 18,
+        'accept-language': 'en'
+      }
+    }).subscribe({
+      next: result => {
+        console.log('LOCATION RESULT:', result);
+
+        this.newGym.location = result.display_name;
+
+        this.changeDetector.detectChanges();
+      },
+
+      error: error => {
+        console.error('Error getting location:', error);
+
+        this.newGym.location =
+          `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+
+        this.changeDetector.detectChanges();
+      }
+    });
+  }
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = input.files[0];
+
+      console.log('Selected image:', this.selectedImage);
+    }
   }
 }

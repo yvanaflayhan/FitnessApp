@@ -66,7 +66,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Image</label>
-                    <input type="url" class="form-control" name="imageUrl" [(ngModel)]="newGym.imageUrl"
+                    <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)"
                         placeholder="https://example.com/gym.jpg">
                 </div>
 
@@ -191,38 +191,40 @@
     </div>
     }
 
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Location</th>
-                <th>Phone</th>
-                <th>Hours</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Details</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            @for (gym of gyms; track gym.id) {
-            <tr>
-                <td>{{ gym.id }}</td>
-                <td>{{ gym.name }}</td>
-                <td>{{ gym.address }}</td>
-                <td>{{ gym.location}}</td>
-                <td>{{ gym.phone }}</td>
-                <td>
-                    {{ gym.openingHours }} - {{ gym.closingHours }}
-                </td>
-                <td class="text-nowrap">
-                    <button type="button" class="btn btn-primary btn-sm me-2" (click)="editGym(gym)">Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteGym(gym.id)">Delete</button>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+            <tbody>
+                @for (gym of gyms; track gym.id) {
+                <tr>
+                    <td>{{ gym.id }}</td>
+                    <td class="text-wrap">{{ gym.name }}</td>
+                    <td class="text-wrap">{{ gym.address }}</td>
+                    <td>
+                        <button type="button" class="details-button" [routerLink]="['/admin/gyms', gym.id]">
+                            See more details
+                        </button>
+                    </td>
+                    <td class="text-nowrap">
+                        <button type="button" class="btn btn-primary btn-sm me-2" (click)="editGym(gym)">Edit</button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="deleteGym(gym.id)">Delete</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
     <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChanged)="changePage($event)">
     </app-pagination>
 </div>

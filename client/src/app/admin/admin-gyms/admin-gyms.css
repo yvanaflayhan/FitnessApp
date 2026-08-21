@@ -4,17 +4,13 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* =========================
-   PAGE
-   ========================= */
+
 
 .container {
     max-width: 1200px;
 }
 
-/* =========================
-   HEADER
-   ========================= */
+
 
 h2 {
     font-weight: 600;
@@ -23,9 +19,7 @@ h2 {
     color: #212529;
 }
 
-/* =========================
-   BUTTONS
-   ========================= */
+
 
 .btn {
     font-weight: 500;
@@ -52,19 +46,20 @@ h2 {
     border-radius: 6px;
 }
 
-/* =========================
-   TABLE
-   ========================= */
 
 .table {
     width: 100%;
-    table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.table td {
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 thead th {
@@ -100,9 +95,6 @@ tbody tr {
     background-color: #f8f9fa;
 }
 
-/* =========================
-   MODAL BACKDROP
-   ========================= */
 
 .modal-backdrop-custom {
     position: fixed;
@@ -123,9 +115,6 @@ tbody tr {
     z-index: 1050;
 }
 
-/* =========================
-   MODAL
-   ========================= */
 
 .gym-modal {
     background-color: white;
@@ -149,9 +138,6 @@ tbody tr {
     margin: 0;
 }
 
-/* =========================
-   FORM
-   ========================= */
 
 .gym-modal .form-label {
     display: block;
@@ -198,9 +184,6 @@ tbody tr {
     margin-bottom: 18px !important;
 }
 
-/* =========================
-   MODAL BUTTONS
-   ========================= */
 
 .gym-modal .btn {
     border-radius: 8px;
@@ -212,9 +195,6 @@ tbody tr {
     padding: 10px;
 }
 
-/* =========================
-   LOCATION / MAP
-   ========================= */
 
 .location-box {
     width: 100%;
@@ -237,7 +217,6 @@ tbody tr {
     min-height: 300px;
 }
 
-/* Latitude + Longitude */
 
 .location-coordinates {
     display: grid;
@@ -247,11 +226,8 @@ tbody tr {
     gap: 15px;
 
     margin-top: 12px;
+    margin-bottom: 25px;
 }
-
-/* =========================
-   RESPONSIVE
-   ========================= */
 
 @media (max-width: 768px) {
 
@@ -281,4 +257,54 @@ tbody tr {
     font-size: 35px;
     line-height: 40px;
     text-align: center;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 70px;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    min-width: 180px;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    min-width: 220px;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    min-width: 160px;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    min-width: 180px;
+}
+
+.details-button {
+    background: none;
+    border: none;
+    padding: 0;
+
+    color: #1f8dbf;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.details-button:hover {
+    background: none;
+    color: #1e3a5f;
+    transform: translateX(3px);
+}
+
+.details-button:focus {
+    outline: none;
+    box-shadow: none;
 }

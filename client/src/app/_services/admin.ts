@@ -54,10 +54,12 @@ export class AdminService {
     return this.http.get<Gym>(this.baseUrl + '/gyms/' + id);
   }
 
-  addGym(gym: Gym) {
-    return this.http.post<Gym>(this.baseUrl + '/gyms', gym);
+  addGym(formData: FormData) {
+    return this.http.post<Gym>(
+      this.baseUrl + '/gyms',
+      formData
+    );
   }
-
   updateGym(id: number, gym: Gym) {
     return this.http.put<Gym>(this.baseUrl + '/gyms/' + id, gym);
   }
