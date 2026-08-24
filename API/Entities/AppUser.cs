@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace API.Entities
 {
@@ -10,6 +11,8 @@ namespace API.Entities
         [Required]
 
         public string UserName {get; set;}
+
+        public string FullName {get; set;} =string.Empty;
 
         public byte[] PasswordHash {get; set;}
 

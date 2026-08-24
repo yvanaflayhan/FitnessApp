@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260821112933_AddTrainerApproval")]
+    partial class AddTrainerApproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.10");
@@ -22,9 +25,6 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("TEXT");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("BLOB");
@@ -152,12 +152,6 @@ namespace API.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("GymId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("OtherGymName")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Specialization")
                         .HasColumnType("TEXT");
 
@@ -167,15 +161,10 @@ namespace API.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("WorksIndependently")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("YearsOfExperience")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GymId");
 
                     b.ToTable("TrainerRequests");
                 });
@@ -208,16 +197,6 @@ namespace API.Migrations
                     b.Navigation("Gym");
 
                     b.Navigation("Trainer");
-                });
-
-            modelBuilder.Entity("API.Entities.TrainerRequest", b =>
-                {
-                    b.HasOne("API.Entities.Gym", "Gym")
-                        .WithMany()
-                        .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Gym");
                 });
 
             modelBuilder.Entity("API.Entities.Gym", b =>

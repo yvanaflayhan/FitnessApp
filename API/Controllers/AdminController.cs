@@ -11,11 +11,17 @@ namespace API.Controllers
     {
         private readonly IUserService _userService;
         private readonly IGymService _gymService;
+        private readonly ITrainerService _trainerService;
 
-        public AdminController(IUserService userService, IGymService gymService)
+        public AdminController(
+            IUserService userService,
+            IGymService gymService,
+            ITrainerService trainerService
+        )
         {
             _userService = userService;
             _gymService = gymService;
+            _trainerService = trainerService;
         }
 
         [HttpGet("test")]
@@ -125,6 +131,23 @@ namespace API.Controllers
         {
             var deletedGym = await _gymService.DeleteGymAsync(id);
             if (!deletedGym)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpGet("trainer-requests")]
+        public async Task<ActionResult<IEnumerable<TrainerRequest>>> GetTrainerRequests()
+        {
+            var requests = await _trainerService.GetTrainerRequestsAsync();
+            return Ok(requests);
+        }
+
+        [HttpPut("trainer-requests/{id}/approve")]
+        public async Task<IActionResult> ApproveTrainerRequest(int id)
+        {
+            var approved = await _trainerService.ApproveTrainerRequestAsync(id);
+            if (!approved)
                 return NotFound();
 
             return NoContent();
