@@ -29,6 +29,7 @@ namespace API.Services
         public async Task<bool> ApproveTrainerRequestAsync(int id)
         {
             var request = await _trainerRepository.GetTrainerRequestAsync(id);
+
             if (request == null)
                 return false;
 
@@ -39,6 +40,17 @@ namespace API.Services
 
             if (user == null)
                 return false;
+
+            var existingTrainer = await _trainerRepository.GetTrainerByUserIdAsync(user.Id);
+
+            if (existingTrainer != null)
+            {
+                request.Status = "Approved";
+
+                await _trainerRepository.UpdateTrainerRequestAsync(request);
+
+                return true;
+            }
 
             var trainer = new Trainer
             {
@@ -56,6 +68,7 @@ namespace API.Services
 
             await _trainerRepository.AddTrainerAsync(trainer);
             await _userRepository.UpdateUserAsync(user);
+            await _trainerRepository.UpdateTrainerRequestAsync(request);
 
             return true;
         }
@@ -74,6 +87,19 @@ namespace API.Services
 
         public async Task<bool> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto)
         {
+            var existingRequests = await _trainerRepository.GetTrainerRequestsByUserIdAsync(userId);
+
+            if (existingRequests.Count() >= 2)
+                return false;
+
+            var pendingRequest = existingRequests.FirstOrDefault(r => r.Status == "Pending");
+            if (pendingRequest != null)
+                return false;
+
+            var approvedRequest = existingRequests.FirstOrDefault(r => r.Status == "Approved");
+            if (approvedRequest != null)
+                return false;
+
             var existingRequest = await _trainerRepository.GetPendingRequestByUserIdAsync(userId);
 
             if (existingRequest != null)
@@ -95,13 +121,17 @@ namespace API.Services
 
             return true;
         }
+
         public async Task<bool> RejectTrainerRequestAsync(int id)
         {
             var request = await _trainerRepository.GetTrainerRequestAsync(id);
-            if(request == null)
-            return false;
+            if (request == null)
+                return false;
 
-            if(request.Status != "Rejected");
+            if (request.Status != "Pending")
+                return false;
+
+            request.Status = "Rejected";
 
             await _trainerRepository.UpdateTrainerRequestAsync(request);
             return true;

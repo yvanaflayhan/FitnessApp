@@ -38,7 +38,9 @@ namespace API.Controllers
             var result = await _trainerService.SubmitTrainerRequestAsync(userId, requestDto);
 
             if (!result)
-                return BadRequest("You already have a pending trainer request.");
+                return BadRequest(
+                    "You are already a trainer and cannot submit another trainer request."
+                );
 
             return Ok(new { message = "Trainer request submitted successfully." });
         }

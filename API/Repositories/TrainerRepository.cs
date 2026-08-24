@@ -22,7 +22,10 @@ namespace API.Repositories
 
         public async Task<IEnumerable<TrainerRequest>> GetTrainerRequestsAsync()
         {
-            return await _context.TrainerRequests.Include(r => r.user).Include(r => r.Gym).ToListAsync();
+            return await _context
+                .TrainerRequests.Include(r => r.user)
+                .Include(r => r.Gym)
+                .ToListAsync();
         }
 
         public async Task<TrainerRequest?> GetTrainerRequestAsync(int id)
@@ -57,5 +60,13 @@ namespace API.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Trainer?> GetTrainerByUserIdAsync(int userId)
+        {
+            return await _context.Trainers.FirstOrDefaultAsync(t => t.UserId == userId);
+        }
+        public async Task<IEnumerable<TrainerRequest>> GetTrainerRequestsByUserIdAsync(int userId)
+        {
+            return await _context.TrainerRequests.Where(r => r.UserId == userId).ToListAsync();
+        }
     }
 }

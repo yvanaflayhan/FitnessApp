@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TrainerService } from '../_services/trainer';
 import { Trainer } from '../_models/trainer';
 import { FormsModule } from '@angular/forms';
 import { TrainerRequest } from '../_models/trainer-request';
 import { Gym } from '../_models/gym';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-trainers',
@@ -32,7 +33,8 @@ export class Trainers implements OnInit {
   requestSubmitted = false;
   requestError = '';
 
-  constructor(private trainerService: TrainerService) { }
+  constructor(private trainerService: TrainerService, private changeDetector: ChangeDetectorRef, private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
     this.loadTrainers();
@@ -41,7 +43,10 @@ export class Trainers implements OnInit {
   loadTrainers() {
     this.trainerService.getTrainers().subscribe({
       next: trainers => {
+        console.log('TRAINERS FROM API:', trainers);
         this.trainers = trainers;
+        this.changeDetector.detectChanges();
+
       },
       error: error => {
         console.error('Error loading trainers: ', error);
@@ -87,6 +92,10 @@ export class Trainers implements OnInit {
       .subscribe({
         next: () => {
 
+          this.toastr.success('Your trainer request has been submitted successfully.',
+            'Request Submitted'
+          )
+
           this.requestSubmitted = true;
           this.showTrainerForm = false;
 
@@ -100,13 +109,19 @@ export class Trainers implements OnInit {
           };
 
           this.workplaceType = '';
+          this.changeDetector.detectChanges();
+
         },
 
         error: error => {
           console.error('Error submitting trainer request:', error);
 
-          this.requestError =
-            error.error || 'Unable to submit trainer request.';
+          const message =
+            typeof error.error === 'string'
+              ? error.error
+              : error.error?.message || 'Unable to submit trainer request.';
+
+          this.toastr.error(message, 'Trainer Request');
         }
       });
   }

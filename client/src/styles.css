@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import "ngx-toastr/toastr";
+.toast-container {
+  .ngx-toastr {
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  .toast-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+  }
+  .toast-error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+  }
+  .toast-info {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+  }
+  .toast-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+  }
+}

@@ -1,1 +1,319 @@
-<p>admin-trainer-requests works!</p>
+<div class="container-fluid px-4 px-lg-5 py-5">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <span class="text-primary fw-bold text-uppercase small">
+                Trainer Management
+            </span>
+
+            <h1 class="fw-bold text-dark mb-1">
+                Trainer Requests
+            </h1>
+
+            <p class="text-secondary mb-0">
+                Review users who want to become trainers.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary" (click)="loadRequests()" [disabled]="loading">
+
+            <i class="bi bi-arrow-clockwise me-1"></i>
+            Refresh
+
+        </button>
+
+    </div>
+
+
+    <!-- Error -->
+    @if (errorMessage) {
+
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{ errorMessage }}
+    </div>
+
+    }
+
+
+    <!-- Loading -->
+    @if (loading) {
+
+    <div class="text-center py-5">
+
+        <div class="spinner-border text-primary mb-3" role="status">
+        </div>
+
+        <p class="text-secondary">
+            Loading trainer requests...
+        </p>
+
+    </div>
+
+    }
+
+
+    <!-- Requests -->
+    @if (!loading) {
+
+    @if (requests.length > 0) {
+
+    <div class="row g-4">
+
+        @for (request of requests; track request.id) {
+
+        <div class="col-12 col-xl-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <!-- Card header -->
+                <div class="card-header bg-white border-0 p-4 pb-2">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <h3 class="h5 fw-bold mb-1">
+                                {{ request.user?.fullName || request.user?.userName || 'Unknown User' }}
+                            </h3>
+
+                            <span class="text-secondary">
+                                {{ request.specialization }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- Status -->
+                        @if (request.status === 'Pending') {
+
+                        <span class="badge text-bg-warning">
+                            <i class="bi bi-clock me-1"></i>
+                            Pending
+                        </span>
+
+                        }
+                        @else if (request.status === 'Approved') {
+
+                        <span class="badge text-bg-success">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Approved
+                        </span>
+
+                        }
+                        @else {
+
+                        <span class="badge text-bg-danger">
+                            <i class="bi bi-x-circle me-1"></i>
+                            Rejected
+                        </span>
+
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Card body -->
+                <div class="card-body px-4">
+
+                    <div class="row g-3 mb-4">
+
+                        <!-- Specialization -->
+                        <div class="col-sm-6">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+                                    <i class="bi bi-award"></i>
+                                </div>
+
+                                <div>
+
+                                    <small class="text-secondary d-block">
+                                        Specialization
+                                    </small>
+
+                                    <strong>
+                                        {{ request.specialization }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Experience -->
+                        <div class="col-sm-6">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+                                    <i class="bi bi-briefcase"></i>
+                                </div>
+
+                                <div>
+
+                                    <small class="text-secondary d-block">
+                                        Experience
+                                    </small>
+
+                                    <strong>
+                                        {{ request.yearsOfExperience || 0 }}
+                                        {{ (request.yearsOfExperience || 0) === 1 ? 'year' : 'years' }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Workplace -->
+                        <div class="col-12">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+                                    <i class="bi bi-geo-alt"></i>
+                                </div>
+
+                                <div>
+
+                                    <small class="text-secondary d-block">
+                                        Workplace
+                                    </small>
+
+
+                                    @if (request.worksIndependently) {
+
+                                    <strong>
+                                        Works independently
+                                    </strong>
+
+                                    }
+                                    @else if (request.gym) {
+
+                                    <strong>
+                                        {{ request.gym.name }}
+                                    </strong>
+
+                                    <small class="text-secondary d-block">
+                                        {{ request.gym.address }}
+                                    </small>
+
+                                    }
+                                    @else if (request.otherGymName) {
+
+                                    <strong>
+                                        {{ request.otherGymName }}
+                                    </strong>
+
+                                    <small class="text-secondary d-block">
+                                        External gym
+                                    </small>
+
+                                    }
+                                    @else {
+
+                                    <strong>
+                                        Not specified
+                                    </strong>
+
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Description -->
+                    @if (request.description) {
+
+                    <div class="mb-3">
+
+                        <h6 class="fw-bold">
+                            About the trainer
+                        </h6>
+
+                        <p class="text-secondary mb-0">
+                            {{ request.description }}
+                        </p>
+
+                    </div>
+
+                    }
+
+                </div>
+
+
+                <!-- Actions -->
+                @if (request.status === 'Pending') {
+
+                <div class="card-footer bg-white border-0 px-4 pb-4">
+
+                    <div class="d-flex gap-2">
+
+                        <button type="button" class="btn btn-outline-danger flex-fill"
+                            (click)="rejectRequest(request.id!)">
+
+                            <i class="bi bi-x-lg me-1"></i>
+                            Reject
+
+                        </button>
+
+
+                        <button type="button" class="btn btn-success flex-fill" (click)="approveRequest(request.id!)">
+
+                            <i class="bi bi-check-lg me-1"></i>
+                            Approve
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+    }
+    @else {
+
+    <!-- Empty state -->
+    <div class="text-center py-5">
+
+        <i class="bi bi-person-workspace display-4 text-secondary"></i>
+
+        <h3 class="h5 fw-bold mt-3">
+            No trainer requests
+        </h3>
+
+        <p class="text-secondary">
+            There are currently no trainer applications to review.
+        </p>
+
+    </div>
+
+    }
+
+    }
+
+</div>
