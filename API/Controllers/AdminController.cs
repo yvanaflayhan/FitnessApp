@@ -152,5 +152,14 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("trainer-requests/{id}/reject")]
+        public async Task<IActionResult> RejectTrainerRequest(int id)
+        {
+            var rejected = await _trainerService.RejectTrainerRequestAsync(id);
+            if (!rejected)
+                return NotFound();
+            return NoContent();
+        }
     }
 }

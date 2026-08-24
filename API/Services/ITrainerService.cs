@@ -8,8 +8,11 @@ namespace API.Services
         Task<TrainerRequest> CreateTrainerRequestAsync(TrainerRequest request);
         Task<IEnumerable<TrainerRequest>> GetTrainerRequestsAsync();
         Task<bool> ApproveTrainerRequestAsync(int id);
+        Task<bool> RejectTrainerRequestAsync(int id);
         Task<bool> HasPendingTrainerRequestAsync(int userId);
         Task<IEnumerable<Trainer>> GetTrainersAsync();
         Task<bool> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto);
+        
+        
     }
 }

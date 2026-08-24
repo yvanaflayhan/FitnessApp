@@ -33,8 +33,18 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/admin/gyms" routerLinkActive="active"> Gyms </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/admin/trainers" routerLinkActive="active"> Trainers </a>
+            <li class="nav-item dropdown" dropdown>
+                <a class="nav-link dropdown-toggle" dropdownToggle role="button"> Trainers </a>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li>
+                        <a class="dropdown-item" routerLink="/admin/trainer-requests">
+                            Trainer Requests
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/admin/trainers"> Existing Trainers</a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/admin/bookings" routerLinkActive="active"> Bookings</a>

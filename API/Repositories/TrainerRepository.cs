@@ -22,7 +22,7 @@ namespace API.Repositories
 
         public async Task<IEnumerable<TrainerRequest>> GetTrainerRequestsAsync()
         {
-            return await _context.TrainerRequests.ToListAsync();
+            return await _context.TrainerRequests.Include(r => r.user).Include(r => r.Gym).ToListAsync();
         }
 
         public async Task<TrainerRequest?> GetTrainerRequestAsync(int id)
@@ -49,6 +49,12 @@ namespace API.Repositories
                 .Trainers.Include(t => t.User)
                 .Where(t => t.IsApproved)
                 .ToListAsync();
+        }
+
+        public async Task UpdateTrainerRequestAsync(TrainerRequest request)
+        {
+            _context.TrainerRequests.Update(request);
+            await _context.SaveChangesAsync();
         }
 
     }

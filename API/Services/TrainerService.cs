@@ -95,5 +95,16 @@ namespace API.Services
 
             return true;
         }
+        public async Task<bool> RejectTrainerRequestAsync(int id)
+        {
+            var request = await _trainerRepository.GetTrainerRequestAsync(id);
+            if(request == null)
+            return false;
+
+            if(request.Status != "Rejected");
+
+            await _trainerRepository.UpdateTrainerRequestAsync(request);
+            return true;
+        }
     }
 }
