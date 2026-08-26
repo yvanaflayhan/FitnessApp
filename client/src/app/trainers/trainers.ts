@@ -29,12 +29,20 @@ export class Trainers implements OnInit {
   gyms: any[] = [];
 
   trainerRequest: TrainerRequest = {
+    age: undefined,
+    gender: '',
+    phone: '',
+    height: undefined,
+    weight: undefined,
+    imageUrl:'',
     specialization: '',
     description: '',
     yearsOfExperience: undefined as number | undefined,
+    skills: '',
     gymId: undefined as number | undefined,
     otherGymName: '',
-    worksIndependently: false
+    worksIndependently: false,
+    cvUrl: ''
   };
 
   requestSubmitted = false;
@@ -105,12 +113,20 @@ export class Trainers implements OnInit {
           this.showTrainerForm = false;
 
           this.trainerRequest = {
+            age: undefined,
+            gender: '',
+            phone: '',
+            height: undefined,
+            weight: undefined,
+            imageUrl: '',
             specialization: '',
             description: '',
             yearsOfExperience: undefined,
+            skills: '',
             gymId: undefined,
             otherGymName: '',
-            worksIndependently: false
+            worksIndependently: false,
+            cvUrl: ''
           };
 
           this.workplaceType = '';

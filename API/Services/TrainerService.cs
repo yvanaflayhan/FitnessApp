@@ -115,9 +115,17 @@ namespace API.Services
                 Specialization = requestDto.Specialization,
                 Description = requestDto.Description,
                 YearsOfExperience = requestDto.YearsOfExperience,
+                Skills = requestDto.Skills,
                 GymId = requestDto.GymId,
                 OtherGymName = requestDto.OtherGymName,
                 WorksIndependently = requestDto.WorksIndependently,
+                Age = requestDto.Age,
+                Gender = requestDto.Gender,
+                Phone = requestDto.Phone,
+                Height = requestDto.Height,
+                Weight = requestDto.Weight,
+                ImageUrl = requestDto.ImageUrl,
+                CvUrl = requestDto.CvUrl,
                 Status = "Pending",
             };
 
