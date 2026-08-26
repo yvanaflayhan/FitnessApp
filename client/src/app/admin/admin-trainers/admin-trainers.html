@@ -1,1 +1,109 @@
-<p>admin-trainers works!</p>
+<div class="container-fluid px-4 px-lg-5 py-5">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <span class="text-primary fw-bold text-uppercase small">
+                Trainer Management
+            </span>
+
+            <h1 class="fw-bold text-dark mb-1">
+                Existing Trainers
+            </h1>
+
+            <p class="text-secondary mb-0">
+                All approved trainers currently on the platform.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary" (click)="loadTrainers()" [disabled]="loading">
+            <i class="bi bi-arrow-clockwise me-1"></i>
+            Refresh
+        </button>
+
+    </div>
+
+
+    <!-- Error -->
+    @if (errorMessage) {
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{ errorMessage }}
+    </div>
+    }
+
+
+    <!-- Loading -->
+    @if (loading) {
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <p class="text-secondary">Loading trainers...</p>
+    </div>
+    }
+
+
+    <!-- Trainers -->
+    @if (!loading) {
+
+    @if (trainers.length > 0) {
+
+    <div class="row g-4">
+
+        @for (trainer of trainers; track trainer.id) {
+
+        <div class="col-12 col-xl-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h3 class="h5 fw-bold mb-1">
+                                {{ trainer.specialization }}
+                            </h3>
+                            <span class="text-secondary small">
+                                {{ trainer.yearsOfExperience || 0 }}
+                                {{ (trainer.yearsOfExperience || 0) === 1 ? 'year' : 'years' }} experience
+                            </span>
+                        </div>
+
+                        <span class="badge text-bg-success">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Approved
+                        </span>
+                    </div>
+
+                    @if (trainer.description) {
+                    <p class="text-secondary mb-0">
+                        {{ trainer.description }}
+                    </p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+    }
+    @else {
+
+    <div class="text-center py-5">
+        <i class="bi bi-person-workspace display-4 text-secondary"></i>
+        <h3 class="h5 fw-bold mt-3">No trainers yet</h3>
+        <p class="text-secondary">
+            Approved trainers will appear here once requests are approved.
+        </p>
+    </div>
+
+    }
+
+    }
+
+</div>

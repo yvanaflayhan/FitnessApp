@@ -43,14 +43,23 @@ namespace API.Services
 
             var existingTrainer = await _trainerRepository.GetTrainerByUserIdAsync(user.Id);
 
+            Console.WriteLine($"APPROVING REQUEST: {request.Id}");
+            Console.WriteLine($"REQUEST USER ID: {request.UserId}");
+            Console.WriteLine($"USER ID: {user.Id}");
+            Console.WriteLine($"EXISTING TRAINER ID: {existingTrainer?.Id}");
+
             if (existingTrainer != null)
             {
+                Console.WriteLine("USER ALREADY HAS A TRAINER RECORD!");
+
                 request.Status = "Approved";
 
                 await _trainerRepository.UpdateTrainerRequestAsync(request);
 
                 return true;
             }
+
+            Console.WriteLine("NO EXISTING TRAINER - CREATING NEW TRAINER");
 
             var trainer = new Trainer
             {
