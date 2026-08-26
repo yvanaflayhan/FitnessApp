@@ -4,6 +4,7 @@ namespace API.Entities
     {
         public int Id {get; set;}
         public int UserId {get; set;}
+        public AppUser user {get; set;}
         public string Specialization {get; set;} = string.Empty;
         public string? Description {get; set;}
         public int? YearsOfExperience {get; set;}

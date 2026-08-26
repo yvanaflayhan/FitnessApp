@@ -13,9 +13,10 @@ import { ServerError } from './errors/server-error/server-error';
 import { Admin } from './admin/admin';
 import { AdminUsers } from './admin/admin-users/admin-users';
 import { AdminGyms } from './admin/admin-gyms/admin-gyms';
-import { AdminTrainers } from './admin/admin-trainers/admin-trainers';
 import { AdminBookings } from './admin/admin-bookings/admin-bookings';
 import { AdminGymDetails } from './admin/admin-gym-details/admin-gym-details';
+import { AdminTrainerRequests } from './admin/admin-trainer-requests/admin-trainer-requests';
+import { AdminTrainers } from './admin/admin-trainers/admin-trainers';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -42,6 +43,7 @@ export const routes: Routes = [
             { path: 'users', component: AdminUsers },
             { path: 'gyms', component: AdminGyms },
             { path: 'trainers', component: AdminTrainers },
+            { path: 'trainer-requests', component: AdminTrainerRequests },
             { path: 'bookings', component: AdminBookings },
             { path: 'gyms/:id', component: AdminGymDetails }
         ]

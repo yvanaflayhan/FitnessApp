@@ -36,6 +36,18 @@
       <p class="text-secondary">Find a trainer specialized in what you need.</p>
     </div>
 
+    <div class="alert alert-success">
+      Angular received {{ trainers.length }} trainer(s).
+    </div>
+
+    @for (trainer of trainers; track trainer.id) {
+    <div class="alert alert-info">
+      TEST: {{ trainer.specialization }}
+      - {{ trainer.yearsOfExperience }} years
+      - Approved: {{ trainer.isApproved }}
+    </div>
+    }
+
     @if (trainers.length > 0) {
 
     <div class="row g-4">

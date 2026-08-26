@@ -6,30 +6,50 @@ import { Gym } from "../_models/gym";
 @Injectable({
     providedIn: 'root'
 })
-export class TrainerService{
+export class TrainerService {
     private baseUrl = 'https://localhost:5001/api/trainer';
 
-    constructor(private http: HttpClient){ }
+    constructor(private http: HttpClient) { }
 
-    createTrainerRequest(request: TrainerRequest){
+    createTrainerRequest(request: TrainerRequest) {
         return this.http.post<TrainerRequest>(
             this.baseUrl + '/request',
             request
         );
     }
 
-    getTrainers(){
+    getTrainers() {
         return this.http.get<Trainer[]>(
             this.baseUrl
         );
     }
 
-    submitTrainerRequest(request: TrainerRequest){
+    submitTrainerRequest(request: TrainerRequest) {
         return this.http.post(`${this.baseUrl}/request`, request);
     }
 
-    getGyms(){
+    getGyms() {
         return this.http.get<Gym[]>(this.baseUrl);
+    }
+
+    getTrainerRequests() {
+        return this.http.get<TrainerRequest[]>(
+            'https://localhost:5001/api/admin/trainer-requests'
+        );
+    }
+
+    approveTrainerRequest(id: number) {
+        return this.http.put(
+            `https://localhost:5001/api/admin/trainer-requests/${id}/approve`,
+            {}
+        );
+    }
+
+    rejectTrainerRequest(id: number) {
+        return this.http.put(
+            `https://localhost:5001/api/admin/trainer-requests/${id}/reject`,
+            {}
+        );
     }
 
 }

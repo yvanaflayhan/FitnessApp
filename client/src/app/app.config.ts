@@ -12,7 +12,12 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideToastr({
-      positionClass: 'toast-bottom-right'
+      positionClass: 'toast-top-center',
+      timeOut: 4000,
+      closeButton: true,
+      progressBar: true,
+      easeTime: 300,
+      toastClass: 'ngx-toastr custom-toast'
     }),
     provideHttpClient(
       withInterceptors([authInterceptor, errorInterceptor])
