@@ -2,11 +2,31 @@ namespace API.DTOs
 {
     public class TrainerRequestDto
     {
+
+        //Personal Information
+        public int? Age { get; set; }
+        public string? Gender { get; set; }
+        public string? Phone { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
+        public string? ImageUrl { get; set; }
+
+        //Professional Information 
         public string Specialization {get; set;} = string.Empty;
-        public string? Description {get; set;}
         public int? YearsOfExperience {get; set;}
+        public string? Skills {get; set;}
+
+        //Workplace 
         public int? GymId {get; set;}
         public string? OtherGymName{get; set;}
         public bool WorksIndependently {get; set;}
+
+        //About the trainer
+        public string? Description {get; set;}
+
+        //Documents
+        public string? CvUrl {get; set;}
+        
+        
     }
 }

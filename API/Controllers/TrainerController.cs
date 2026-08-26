@@ -35,12 +35,10 @@ namespace API.Controllers
 
             var userId = int.Parse(userIdClaim);
 
-            var result = await _trainerService.SubmitTrainerRequestAsync(userId, requestDto);
+            var error = await _trainerService.SubmitTrainerRequestAsync(userId, requestDto);
 
-            if (!result)
-                return BadRequest(
-                    "You are already a trainer and cannot submit another trainer request."
-                );
+            if (error != null)
+                return BadRequest(new { message = error });
 
             return Ok(new { message = "Trainer request submitted successfully." });
         }

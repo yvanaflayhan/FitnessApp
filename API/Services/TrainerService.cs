@@ -43,14 +43,23 @@ namespace API.Services
 
             var existingTrainer = await _trainerRepository.GetTrainerByUserIdAsync(user.Id);
 
+            Console.WriteLine($"APPROVING REQUEST: {request.Id}");
+            Console.WriteLine($"REQUEST USER ID: {request.UserId}");
+            Console.WriteLine($"USER ID: {user.Id}");
+            Console.WriteLine($"EXISTING TRAINER ID: {existingTrainer?.Id}");
+
             if (existingTrainer != null)
             {
+                Console.WriteLine("USER ALREADY HAS A TRAINER RECORD!");
+
                 request.Status = "Approved";
 
                 await _trainerRepository.UpdateTrainerRequestAsync(request);
 
                 return true;
             }
+
+            Console.WriteLine("NO EXISTING TRAINER - CREATING NEW TRAINER");
 
             var trainer = new Trainer
             {
@@ -85,25 +94,20 @@ namespace API.Services
             return await _trainerRepository.GetTrainersAsync();
         }
 
-        public async Task<bool> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto)
+        public async Task<string?> SubmitTrainerRequestAsync(
+            int userId,
+            TrainerRequestDto requestDto
+        )
         {
             var existingRequests = await _trainerRepository.GetTrainerRequestsByUserIdAsync(userId);
 
-            if (existingRequests.Count() >= 2)
-                return false;
-
             var pendingRequest = existingRequests.FirstOrDefault(r => r.Status == "Pending");
             if (pendingRequest != null)
-                return false;
+                return "You already have a pending trainer request.";
 
             var approvedRequest = existingRequests.FirstOrDefault(r => r.Status == "Approved");
             if (approvedRequest != null)
-                return false;
-
-            var existingRequest = await _trainerRepository.GetPendingRequestByUserIdAsync(userId);
-
-            if (existingRequest != null)
-                return false;
+                return "You are already an approved trainer.";
 
             var request = new TrainerRequest
             {
@@ -111,15 +115,23 @@ namespace API.Services
                 Specialization = requestDto.Specialization,
                 Description = requestDto.Description,
                 YearsOfExperience = requestDto.YearsOfExperience,
+                Skills = requestDto.Skills,
                 GymId = requestDto.GymId,
                 OtherGymName = requestDto.OtherGymName,
                 WorksIndependently = requestDto.WorksIndependently,
+                Age = requestDto.Age,
+                Gender = requestDto.Gender,
+                Phone = requestDto.Phone,
+                Height = requestDto.Height,
+                Weight = requestDto.Weight,
+                ImageUrl = requestDto.ImageUrl,
+                CvUrl = requestDto.CvUrl,
                 Status = "Pending",
             };
 
             await _trainerRepository.AddTrainerRequestAsync(request);
 
-            return true;
+            return null;
         }
 
         public async Task<bool> RejectTrainerRequestAsync(int id)

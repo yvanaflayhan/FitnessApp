@@ -43,13 +43,8 @@ export class AdminTrainerRequests implements OnInit {
   approveRequest(id: number): void {
     this.trainerService.approveTrainerRequest(id).subscribe({
       next: () => {
-        const request = this.requests.find(r => r.id === id);
-
-        if (request) {
-          request.status = 'Approved';
-        }
+        this.requests = this.requests.filter(r => r.id !== id);
         this.changeDetector.detectChanges();
-
       },
       error: error => {
         console.error('Error approving trainer request:', error);
@@ -60,14 +55,8 @@ export class AdminTrainerRequests implements OnInit {
   rejectRequest(id: number): void {
     this.trainerService.rejectTrainerRequest(id).subscribe({
       next: () => {
-        const request = this.requests.find(r => r.id === id);
-
-        if (request) {
-          request.status = 'Rejected';
-        }
-
+        this.requests = this.requests.filter(r => r.id !== id);
         this.changeDetector.detectChanges();
-
       },
       error: error => {
         console.error('Error rejecting trainer request:', error);

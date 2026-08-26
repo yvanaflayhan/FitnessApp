@@ -14,6 +14,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class Trainers implements OnInit {
   trainers: Trainer[] = []
+  searchTerm = '';
+
+  get filteredTrainers(): Trainer[] {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) return this.trainers;
+    return this.trainers.filter(t => t.specialization?.toLowerCase().includes(term));
+  }
 
   showTrainerForm = false;
 
@@ -22,12 +29,20 @@ export class Trainers implements OnInit {
   gyms: any[] = [];
 
   trainerRequest: TrainerRequest = {
+    age: undefined,
+    gender: '',
+    phone: '',
+    height: undefined,
+    weight: undefined,
+    imageUrl:'',
     specialization: '',
     description: '',
     yearsOfExperience: undefined as number | undefined,
+    skills: '',
     gymId: undefined as number | undefined,
     otherGymName: '',
-    worksIndependently: false
+    worksIndependently: false,
+    cvUrl: ''
   };
 
   requestSubmitted = false;
@@ -43,10 +58,8 @@ export class Trainers implements OnInit {
   loadTrainers() {
     this.trainerService.getTrainers().subscribe({
       next: trainers => {
-        console.log('TRAINERS FROM API:', trainers);
         this.trainers = trainers;
         this.changeDetector.detectChanges();
-
       },
       error: error => {
         console.error('Error loading trainers: ', error);
@@ -100,12 +113,20 @@ export class Trainers implements OnInit {
           this.showTrainerForm = false;
 
           this.trainerRequest = {
+            age: undefined,
+            gender: '',
+            phone: '',
+            height: undefined,
+            weight: undefined,
+            imageUrl: '',
             specialization: '',
             description: '',
             yearsOfExperience: undefined,
+            skills: '',
             gymId: undefined,
             otherGymName: '',
-            worksIndependently: false
+            worksIndependently: false,
+            cvUrl: ''
           };
 
           this.workplaceType = '';

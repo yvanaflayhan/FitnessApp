@@ -25,6 +25,7 @@ namespace API.Repositories
             return await _context
                 .TrainerRequests.Include(r => r.user)
                 .Include(r => r.Gym)
+                .Where(r => r.Status == "Pending")
                 .ToListAsync();
         }
 
@@ -64,6 +65,7 @@ namespace API.Repositories
         {
             return await _context.Trainers.FirstOrDefaultAsync(t => t.UserId == userId);
         }
+
         public async Task<IEnumerable<TrainerRequest>> GetTrainerRequestsByUserIdAsync(int userId)
         {
             return await _context.TrainerRequests.Where(r => r.UserId == userId).ToListAsync();

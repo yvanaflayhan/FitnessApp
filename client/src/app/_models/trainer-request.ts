@@ -7,9 +7,16 @@ export interface TrainerRequest {
         fullName: string;
 
     };
+    age?: number;
+    gender?: string;
+    phone?: string;
+    height?: number;
+    weight?: number;
+    imageUrl?: string;
     specialization: string;
     description?: string;
     yearsOfExperience?: number;
+    skills?: string;
     gymId?: number;
     gym?: {
         id: number;
@@ -18,5 +25,6 @@ export interface TrainerRequest {
     };
     otherGymName?: string;
     worksIndependently: boolean;
+    cvUrl?: string;
     status?: string;
 }
