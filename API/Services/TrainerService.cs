@@ -85,25 +85,20 @@ namespace API.Services
             return await _trainerRepository.GetTrainersAsync();
         }
 
-        public async Task<bool> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto)
+        public async Task<string?> SubmitTrainerRequestAsync(
+            int userId,
+            TrainerRequestDto requestDto
+        )
         {
             var existingRequests = await _trainerRepository.GetTrainerRequestsByUserIdAsync(userId);
 
-            if (existingRequests.Count() >= 2)
-                return false;
-
             var pendingRequest = existingRequests.FirstOrDefault(r => r.Status == "Pending");
             if (pendingRequest != null)
-                return false;
+                return "You already have a pending trainer request.";
 
             var approvedRequest = existingRequests.FirstOrDefault(r => r.Status == "Approved");
             if (approvedRequest != null)
-                return false;
-
-            var existingRequest = await _trainerRepository.GetPendingRequestByUserIdAsync(userId);
-
-            if (existingRequest != null)
-                return false;
+                return "You are already an approved trainer.";
 
             var request = new TrainerRequest
             {
@@ -119,7 +114,7 @@ namespace API.Services
 
             await _trainerRepository.AddTrainerRequestAsync(request);
 
-            return true;
+            return null;
         }
 
         public async Task<bool> RejectTrainerRequestAsync(int id)

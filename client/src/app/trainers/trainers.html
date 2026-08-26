@@ -20,7 +20,8 @@
         <span class="input-group-text bg-white border-0">
           <i class="bi bi-search"></i>
         </span>
-        <input type="text" class="form-control border-0" placeholder="Search by specialization..." />
+        <input type="text" class="form-control border-0" placeholder="Search by specialization..."
+          [(ngModel)]="searchTerm" name="searchTerm" />
       </div>
 
     </div>
@@ -36,23 +37,11 @@
       <p class="text-secondary">Find a trainer specialized in what you need.</p>
     </div>
 
-    <div class="alert alert-success">
-      Angular received {{ trainers.length }} trainer(s).
-    </div>
-
-    @for (trainer of trainers; track trainer.id) {
-    <div class="alert alert-info">
-      TEST: {{ trainer.specialization }}
-      - {{ trainer.yearsOfExperience }} years
-      - Approved: {{ trainer.isApproved }}
-    </div>
-    }
-
-    @if (trainers.length > 0) {
+    @if (filteredTrainers.length > 0) {
 
     <div class="row g-4">
 
-      @for (trainer of trainers; track trainer.id) {
+      @for (trainer of filteredTrainers; track trainer.id) {
 
       <div class="col-12 col-md-6 col-lg-4">
         <div class="card h-100 shadow-sm border-0">

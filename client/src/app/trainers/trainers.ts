@@ -14,6 +14,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class Trainers implements OnInit {
   trainers: Trainer[] = []
+  searchTerm = '';
+
+  get filteredTrainers(): Trainer[] {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) return this.trainers;
+    return this.trainers.filter(t => t.specialization?.toLowerCase().includes(term));
+  }
 
   showTrainerForm = false;
 
@@ -43,10 +50,8 @@ export class Trainers implements OnInit {
   loadTrainers() {
     this.trainerService.getTrainers().subscribe({
       next: trainers => {
-        console.log('TRAINERS FROM API:', trainers);
         this.trainers = trainers;
         this.changeDetector.detectChanges();
-
       },
       error: error => {
         console.error('Error loading trainers: ', error);
