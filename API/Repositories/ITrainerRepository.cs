@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.Entities;
 
 namespace API.Repositories
@@ -14,5 +15,6 @@ namespace API.Repositories
 
         Task UpdateTrainerRequestAsync(TrainerRequest request);
         Task<Trainer?> GetTrainerByUserIdAsync(int userId);
+        Task<Trainer?> GetTrainerByIdAsync(int id);
     }
 }

@@ -23,6 +23,12 @@ export class TrainerService {
             this.baseUrl
         );
     }
+    
+    getTrainer(id: number) {
+        return this.http.get<Trainer>(
+            `${this.baseUrl}/${id}`
+        );
+    }
 
     submitTrainerRequest(formData: FormData) {
         return this.http.post(`${this.baseUrl}/request`, formData);

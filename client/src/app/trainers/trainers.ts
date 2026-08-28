@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { TrainerRequest } from '../_models/trainer-request';
 import { Gym } from '../_models/gym';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-trainers',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './trainers.html',
   styleUrl: './trainers.css',
 })
@@ -60,6 +61,7 @@ export class Trainers implements OnInit {
   loadTrainers() {
     this.trainerService.getTrainers().subscribe({
       next: trainers => {
+        console.log('TRAINERS FROM API:', trainers);
         this.trainers = trainers;
         this.changeDetector.detectChanges();
       },

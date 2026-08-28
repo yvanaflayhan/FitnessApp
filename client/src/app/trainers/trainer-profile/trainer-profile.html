@@ -1,0 +1,187 @@
+<div class="trainer-profile-page">
+
+    <!-- Loading -->
+    @if (loading) {
+
+    <div class="container py-5 text-center">
+
+        <div class="spinner-border text-primary mb-3"></div>
+
+        <p class="text-secondary">
+            Loading trainer profile...
+        </p>
+
+    </div>
+
+    }
+
+    <!-- Error -->
+    @else if (error) {
+
+    <div class="container py-5">
+
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+
+    </div>
+
+    }
+
+    <!-- Trainer -->
+    @else if (trainer) {
+
+    <div class="container py-5">
+
+        <!-- Back -->
+        <a routerLink="/trainers" class="btn btn-outline-secondary mb-4">
+
+            <i class="bi bi-arrow-left me-2"></i>
+
+            Back to Trainers
+
+        </a>
+
+
+        <!-- Profile Card -->
+        <div class="card border-0 shadow-sm overflow-hidden">
+
+            <div class="row g-0">
+
+                <!-- Image -->
+                <div class="col-lg-4">
+
+                    <div class="trainer-profile-image">
+
+                        @if (trainer.imageUrl) {
+
+                        <img [src]="trainer.imageUrl" [alt]="trainer.fullName" class="w-100 h-100" />
+
+                        }
+
+                        @else {
+
+                        <div class="trainer-profile-placeholder">
+
+                            <i class="bi bi-person"></i>
+
+                        </div>
+
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Information -->
+                <div class="col-lg-8">
+
+                    <div class="card-body p-4 p-lg-5">
+
+                        <!-- Specialization -->
+                        <span class="text-primary fw-bold text-uppercase small">
+                            {{ trainer.specialization }}
+                        </span>
+
+
+                        <!-- Name -->
+                        <h1 class="display-5 fw-bold text-dark mt-2 mb-3">
+                            {{ trainer.fullName }}
+                        </h1>
+
+
+                        <!-- Description -->
+                        <p class="text-secondary lead">
+                            {{
+                            trainer.description ||
+                            'Professional trainer ready to help you reach your goals.'
+                            }}
+                        </p>
+
+
+                        <!-- Experience -->
+                        <div class="d-flex align-items-center mt-4 mb-4">
+
+                            <div class="profile-icon">
+                                <i class="bi bi-award"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="fw-bold text-dark">
+                                    {{ trainer.yearsOfExperience || 0 }} years
+                                </div>
+
+                                <div class="small text-secondary">
+                                    Experience
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Skills -->
+                        @if (trainer.skills) {
+
+                        <div class="mb-4">
+
+                            <h5 class="fw-bold text-dark mb-3">
+                                Skills
+                            </h5>
+
+                            <div class="d-flex flex-wrap gap-2">
+
+                                @for (skill of trainer.skills.split(','); track skill) {
+
+                                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+
+                                    {{ skill.trim() }}
+
+                                </span>
+
+                                }
+
+                            </div>
+
+                        </div>
+
+                        }
+
+
+                        <!-- Contact -->
+                        @if (trainer.phone) {
+
+                        <div class="border-top pt-4">
+
+                            <h5 class="fw-bold text-dark mb-3">
+                                Contact
+                            </h5>
+
+                            <div class="d-flex align-items-center text-secondary">
+
+                                <i class="bi bi-telephone text-primary me-2"></i>
+
+                                {{ trainer.phone }}
+
+                            </div>
+
+                        </div>
+
+                        }
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+</div>

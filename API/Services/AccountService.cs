@@ -36,6 +36,7 @@ namespace API.Services
             var user = new AppUser //converting registerDto to AppUser
             {
                 UserName = registerDto.Username.ToLower(),
+                FullName = registerDto.FullName,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key,
             };

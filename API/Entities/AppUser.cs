@@ -1,7 +1,5 @@
 
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-
 namespace API.Entities
 {
     public class AppUser

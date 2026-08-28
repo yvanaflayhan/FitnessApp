@@ -18,11 +18,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trainer>>> GetTrainers()
+        public async Task<ActionResult<IEnumerable<TrainerDto>>> GetTrainers()
         {
             var trainers = await _trainerService.GetTrainersAsync();
 
             return Ok(trainers);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<TrainerDto>>> GetTrainers(int id)
+        {
+            var trainer = await _trainerService.GetTrainerByIdAsync(id);
+            if(trainer == null)
+                return NotFound("Trainer not found.");
+
+            return Ok(trainer);
         }
 
         [HttpPost("request")]
