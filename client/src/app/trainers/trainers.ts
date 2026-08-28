@@ -26,7 +26,9 @@ export class Trainers implements OnInit {
 
   workplaceType = '';
 
-  gyms: any[] = [];
+  gyms: Gym[] = [];
+  selectedImage: File | null = null;
+  selectedCv: File | null = null;
 
   trainerRequest: TrainerRequest = {
     age: undefined,
@@ -34,7 +36,7 @@ export class Trainers implements OnInit {
     phone: '',
     height: undefined,
     weight: undefined,
-    imageUrl:'',
+    imageUrl: '',
     specialization: '',
     description: '',
     yearsOfExperience: undefined as number | undefined,
@@ -48,11 +50,11 @@ export class Trainers implements OnInit {
   requestSubmitted = false;
   requestError = '';
 
-  constructor(private trainerService: TrainerService, private changeDetector: ChangeDetectorRef, private toastr: ToastrService
-  ) { }
+  constructor(private trainerService: TrainerService, private changeDetector: ChangeDetectorRef, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.loadTrainers();
+    this.loadGyms();
   }
 
   loadTrainers() {
@@ -99,52 +101,144 @@ export class Trainers implements OnInit {
       this.trainerRequest.otherGymName = '';
       this.trainerRequest.worksIndependently = true;
 
+    } else if (this.workplaceType === 'both') {
+
+      this.trainerRequest.otherGymName = '';
+      this.trainerRequest.worksIndependently = true;
+
     }
 
-    this.trainerService.submitTrainerRequest(this.trainerRequest)
-      .subscribe({
-        next: () => {
+    const formData = new FormData();
 
-          this.toastr.success('Your trainer request has been submitted successfully.',
-            'Request Submitted'
-          )
+    formData.append('Specialization', this.trainerRequest.specialization);
+    formData.append(
+      'WorksIndependently',
+      String(this.trainerRequest.worksIndependently)
+    );
 
-          this.requestSubmitted = true;
-          this.showTrainerForm = false;
+    if (this.trainerRequest.age !== undefined)
+      formData.append('Age', String(this.trainerRequest.age));
 
-          this.trainerRequest = {
-            age: undefined,
-            gender: '',
-            phone: '',
-            height: undefined,
-            weight: undefined,
-            imageUrl: '',
-            specialization: '',
-            description: '',
-            yearsOfExperience: undefined,
-            skills: '',
-            gymId: undefined,
-            otherGymName: '',
-            worksIndependently: false,
-            cvUrl: ''
-          };
+    if (this.trainerRequest.gender)
+      formData.append('Gender', this.trainerRequest.gender);
 
-          this.workplaceType = '';
-          this.changeDetector.detectChanges();
+    if (this.trainerRequest.phone)
+      formData.append('Phone', this.trainerRequest.phone);
 
-        },
+    if (this.trainerRequest.height !== undefined)
+      formData.append('Height', String(this.trainerRequest.height));
 
-        error: error => {
-          console.error('Error submitting trainer request:', error);
+    if (this.trainerRequest.weight !== undefined)
+      formData.append('Weight', String(this.trainerRequest.weight));
 
-          const message =
-            typeof error.error === 'string'
-              ? error.error
-              : error.error?.message || 'Unable to submit trainer request.';
+    if (this.trainerRequest.yearsOfExperience !== undefined)
+      formData.append(
+        'YearsOfExperience',
+        String(this.trainerRequest.yearsOfExperience)
+      );
 
-          this.toastr.error(message, 'Trainer Request');
-        }
-      });
+    if (this.trainerRequest.skills)
+      formData.append('Skills', this.trainerRequest.skills);
+
+    if (this.trainerRequest.gymId !== undefined)
+      formData.append('GymId', String(this.trainerRequest.gymId));
+
+    if (this.trainerRequest.otherGymName)
+      formData.append('OtherGymName', this.trainerRequest.otherGymName);
+
+    if (this.trainerRequest.description)
+      formData.append('Description', this.trainerRequest.description);
+
+    if (this.selectedImage)
+      formData.append('image', this.selectedImage);
+
+    if (this.selectedCv)
+      formData.append('cv', this.selectedCv);
+
+
+    // SEND REQUEST
+    this.trainerService.submitTrainerRequest(formData).subscribe({
+      next: () => {
+
+        this.toastr.success('Your trainer request has been submitted successfully.',
+          'Request Submitted'
+        )
+
+        this.requestSubmitted = true;
+        this.showTrainerForm = false;
+
+        this.trainerRequest = {
+          age: undefined,
+          gender: '',
+          phone: '',
+          height: undefined,
+          weight: undefined,
+          imageUrl: '',
+          specialization: '',
+          description: '',
+          yearsOfExperience: undefined,
+          skills: '',
+          gymId: undefined,
+          otherGymName: '',
+          worksIndependently: false,
+          cvUrl: ''
+        };
+
+        this.workplaceType = '';
+        this.changeDetector.detectChanges();
+
+      },
+
+      error: error => {
+        console.error('Error submitting trainer request:', error);
+
+        const message =
+          typeof error.error === 'string'
+            ? error.error
+            : error.error?.message || 'Unable to submit trainer request.';
+
+        this.toastr.error(message, 'Trainer Request');
+      }
+    });
+  }
+
+  loadGyms() {
+    this.trainerService.getGyms().subscribe({//angular send get https://localhost:5001/api/gym
+      next: gyms => {
+        this.gyms = gyms; //we put response inside this.gyms 
+        console.log('GYMS FROM API:', gyms);
+        this.changeDetector.detectChanges();
+      },
+      error: error => {
+        console.error('Error loading gyms:', error);
+      }
+    });
+  }
+  onImageSelected(event: Event) {
+
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+
+      this.selectedImage = input.files[0];
+
+      console.log('Selected image:', this.selectedImage);
+
+    }
+
+  }
+  onCvSelected(event: Event) {
+
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+
+      this.selectedCv = input.files[0];
+
+      console.log('Selected CV:', this.selectedCv);
+
+    }
+
   }
 
 }

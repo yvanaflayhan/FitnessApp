@@ -37,6 +37,11 @@ namespace API.Services
         {
             return await _gymRepository.DeleteGymAsync(id);
         }
+        public async Task<IEnumerable<Gym>> GetAllGymsAsync()
+        {
+            return await _gymRepository.GetAllGymsAsync();
+        }
+        
         
         
     }

@@ -175,6 +175,93 @@
 
       <form #trainerForm="ngForm" (ngSubmit)="submitTrainerRequest()">
 
+        <!-- ==================== PERSONAL INFORMATION ==================== -->
+        <h5 class="fw-bold mb-3">Personal Information</h5>
+
+        <div class="row">
+
+          <!-- Age -->
+          <div class="col-md-6 mb-3">
+            <label for="age" class="form-label fw-semibold">
+              Age
+            </label>
+
+            <input id="age" type="number" class="form-control" name="age" [(ngModel)]="trainerRequest.age" min="18"
+              placeholder="e.g. 25">
+          </div>
+
+
+          <!-- Gender -->
+          <div class="col-md-6 mb-3">
+            <label for="gender" class="form-label fw-semibold">
+              Gender
+            </label>
+
+            <select id="gender" class="form-select" name="gender" [(ngModel)]="trainerRequest.gender">
+
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+
+            </select>
+          </div>
+
+
+          <!-- Phone -->
+          <div class="col-md-6 mb-3">
+            <label for="phone" class="form-label fw-semibold">
+              Phone Number
+            </label>
+
+            <input id="phone" type="tel" class="form-control" name="phone" [(ngModel)]="trainerRequest.phone"
+              placeholder="e.g. 71 123 456">
+          </div>
+
+
+          <!-- Height -->
+          <div class="col-md-3 mb-3">
+            <label for="height" class="form-label fw-semibold">
+              Height (cm)
+            </label>
+
+            <input id="height" type="number" class="form-control" name="height" [(ngModel)]="trainerRequest.height"
+              min="100" max="250" placeholder="e.g. 175">
+          </div>
+
+
+          <!-- Weight -->
+          <div class="col-md-3 mb-3">
+            <label for="weight" class="form-label fw-semibold">
+              Weight (kg)
+            </label>
+
+            <input id="weight" type="number" class="form-control" name="weight" [(ngModel)]="trainerRequest.weight"
+              min="30" max="300" placeholder="e.g. 70">
+          </div>
+
+        </div>
+        <!-- Profile Image -->
+        <div class="mb-3">
+
+          <label for="image" class="form-label fw-semibold">
+            Profile Picture
+          </label>
+
+          <input id="image" type="file" class="form-control" name="image" accept="image/*"
+            (change)="onImageSelected($event)">
+
+          <div class="form-text">
+            Upload a clear profile picture. This picture will be shown on your trainer profile.
+          </div>
+
+        </div>
+
+
+        <!-- ==================== PROFESSIONAL INFORMATION ==================== -->
+        <h5 class="fw-bold mb-3 mt-4">
+          Professional Information
+        </h5>
+
         <!-- Specialization -->
         <div class="mb-3">
 
@@ -202,21 +289,145 @@
         </div>
 
 
-        <!-- Description -->
-        <div class="mb-4">
+        <!-- Skills -->
+        <div class="mb-3">
 
-          <label for="description" class="form-label fw-semibold">
-            About You
+          <label for="skills" class="form-label fw-semibold">
+            Skills
           </label>
 
-          <textarea id="description" class="form-control" name="description" rows="5"
-            [(ngModel)]="trainerRequest.description" placeholder="Tell us about your experience and expertise...">
-            </textarea>
+          <input id="skills" type="text" class="form-control" name="skills" [(ngModel)]="trainerRequest.skills"
+            placeholder="e.g. Strength Training, Yoga, Rehabilitation">
+
+          <div class="form-text">
+            List the sports or training skills you specialize in.
+          </div>
+
+        </div>
+        <!-- CV -->
+        <div class="mb-4">
+          <label for="cv" class="form-label fw-semibold">
+            Curriculum Vitae (CV)
+          </label>
+
+          <input id="cv" type="file" class="form-control" name="cv" accept=".pdf,.doc,.docx"
+            (change)="onCvSelected($event)">
+
+          <div class="form-text">
+            Upload your CV in PDF, DOC, or DOCX format.
+          </div>
+        </div>
+
+
+        <!-- ==================== WORKPLACE ==================== -->
+        <h5 class="fw-bold mb-3 mt-4">
+          Workplace
+        </h5>
+
+
+        <!-- Workplace Type -->
+        <div class="mb-3">
+
+          <label for="workplaceType" class="form-label fw-semibold">
+            Where do you work?
+          </label>
+
+          <select id="workplaceType" class="form-select" name="workplaceType" [(ngModel)]="workplaceType" required>
+
+            <option value="">
+              Select workplace
+            </option>
+
+            <option value="fitnessGym">
+              A gym listed on FitnessApp
+            </option>
+
+            <option value="otherGym">
+              Another gym
+            </option>
+
+            <option value="independent">
+              Independently / Home visits
+            </option>
+
+            <option value="both">
+              Both a gym and independently
+            </option>
+
+          </select>
 
         </div>
 
 
-        <!-- Error message -->
+        <!-- FitnessApp Gym -->
+        @if (workplaceType === 'fitnessGym' || workplaceType === 'both') {
+
+        <div class="mb-3">
+
+          <label for="gym" class="form-label fw-semibold">
+            Select Gym
+          </label>
+
+          <select id="gym" class="form-select" name="gymId" [(ngModel)]="trainerRequest.gymId" required>
+
+            <option [ngValue]="undefined">
+              Select a gym
+            </option>
+
+            @for (gym of gyms; track gym.id) {
+
+            <option [ngValue]="gym.id">
+              {{ gym.name }} — {{ gym.address }}
+            </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        }
+
+
+        <!-- Other Gym -->
+        @if (workplaceType === 'otherGym') {
+
+        <div class="mb-3">
+
+          <label for="otherGymName" class="form-label fw-semibold">
+            Gym Name
+          </label>
+
+          <input id="otherGymName" type="text" class="form-control" name="otherGymName"
+            [(ngModel)]="trainerRequest.otherGymName" placeholder="Enter the gym name">
+
+        </div>
+
+        }
+
+
+        <!-- ==================== ABOUT THE TRAINER ==================== -->
+        <h5 class="fw-bold mb-3 mt-4">
+          About You
+        </h5>
+
+
+        <!-- Description / Story -->
+        <div class="mb-4">
+
+          <label for="description" class="form-label fw-semibold">
+            Your Story
+          </label>
+
+          <textarea id="description" class="form-control" name="description" rows="6"
+            [(ngModel)]="trainerRequest.description"
+            placeholder="Tell us about yourself, how you started in sports, your experience, why you love sports, and how you continue developing your skills...">
+    </textarea>
+
+        </div>
+
+
+        <!-- ==================== ERROR ==================== -->
         @if (requestError) {
 
         <div class="alert alert-danger">
@@ -226,16 +437,20 @@
         }
 
 
-        <!-- Buttons -->
+        <!-- ==================== BUTTONS ==================== -->
         <div class="d-flex justify-content-end gap-2">
 
           <button type="button" class="btn btn-outline-secondary" (click)="closeTrainerForm()">
+
             Cancel
+
           </button>
+
 
           <button type="submit" class="btn btn-primary" [disabled]="trainerForm.invalid">
 
             Submit Application
+
             <i class="bi bi-arrow-right ms-1"></i>
 
           </button>

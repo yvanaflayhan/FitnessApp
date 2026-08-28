@@ -491,3 +491,7 @@ client/.angular/
 
 # SSL private key
 client/ssl/*.key
+
+# Trainer uploaded files
+API/wwwroot/images/trainers/
+API/wwwroot/documents/trainers/

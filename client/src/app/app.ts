@@ -16,17 +16,35 @@ export class App implements OnInit {
 
   protected readonly title = signal('client');
 
-  users: any; 
+  users: any;
 
-  constructor( private account: Account) {}
+  constructor(private account: Account) { }
   ngOnInit(): void {
     this.setCurrentUser();
   }
 
-  setCurrentUser(){
-    const userString= localStorage.getItem('user');
-    if(!userString) return;
-    const user: User = JSON.parse(userString);
-    this.account.setCurentUser(user);
+  setCurrentUser() {
+
+    const userString = localStorage.getItem('user');
+
+    if (!userString) {
+      return;
+    }
+
+    this.account.getCurrentUser().subscribe({
+      next: currentUser => {
+
+        this.account.setCurentUser(currentUser);
+
+        console.log('Token is valid. Current user:', currentUser);
+      },
+
+      error: error => {
+
+        console.log('Token is invalid or expired.');
+
+        this.account.logout();
+      }
+    });
   }
 }
