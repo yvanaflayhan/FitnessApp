@@ -47,4 +47,11 @@ export class Account {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }
+
+  validateToken() {
+    return this.http.get<User>(this.baseUrl + 'account/validate');
+  }
+  getCurrentUser() {
+    return this.http.get<User>(this.baseUrl + 'users/current');
+  }
 }

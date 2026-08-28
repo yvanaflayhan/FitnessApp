@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.DTOs;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +32,25 @@ namespace API.Controllers
 
             if (user == null)
                 return NotFound();
+
+            return Ok(user);
+        }
+
+        [Authorize]
+        [HttpGet("current")]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            var userId = int.Parse(userIdClaim);
+
+            var user = await _userService.GetUserAsync(userId);
+
+            if (user == null)
+                return Unauthorized();
 
             return Ok(user);
         }

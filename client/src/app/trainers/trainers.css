@@ -35,3 +35,41 @@
   padding: 2rem;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
 }
+.trainer-card {
+  border-radius: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trainer-card:hover {
+  transform: translateY(-4px);
+}
+
+.trainer-avatar {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+}
+
+.trainer-avatar-img,
+.trainer-avatar-placeholder {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.trainer-avatar-img {
+  object-fit: cover;
+}
+
+.trainer-avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bs-secondary-bg);
+  color: var(--bs-secondary-color);
+  font-size: 30px;
+}
+
+.min-w-0 {
+  min-width: 0;
+}

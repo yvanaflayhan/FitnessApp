@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,6 +70,13 @@ namespace API.Repositories
         public async Task<IEnumerable<TrainerRequest>> GetTrainerRequestsByUserIdAsync(int userId)
         {
             return await _context.TrainerRequests.Where(r => r.UserId == userId).ToListAsync();
+        }
+
+        public async Task<Trainer?> GetTrainerByIdAsync(int id)
+        {
+            return await _context
+                .Trainers.Include(t => t.User)
+                .FirstOrDefaultAsync(t => t.Id == id && t.IsApproved);
         }
     }
 }

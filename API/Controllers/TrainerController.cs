@@ -18,15 +18,29 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trainer>>> GetTrainers()
+        public async Task<ActionResult<IEnumerable<TrainerDto>>> GetTrainers()
         {
             var trainers = await _trainerService.GetTrainersAsync();
 
             return Ok(trainers);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<TrainerDto>>> GetTrainers(int id)
+        {
+            var trainer = await _trainerService.GetTrainerByIdAsync(id);
+            if(trainer == null)
+                return NotFound("Trainer not found.");
+
+            return Ok(trainer);
+        }
+
         [HttpPost("request")]
-        public async Task<ActionResult> SubmitTrainerRequest(TrainerRequestDto requestDto)
+        public async Task<ActionResult> SubmitTrainerRequest(
+            [FromForm] TrainerRequestDto requestDto,
+            IFormFile? image,
+            IFormFile? cv
+        )
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -34,6 +48,52 @@ namespace API.Controllers
                 return Unauthorized();
 
             var userId = int.Parse(userIdClaim);
+
+            // Save profile image
+            if (image != null && image.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "images",
+                    "trainers"
+                );
+
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+
+                await image.CopyToAsync(stream);
+
+                requestDto.ImageUrl = $"https://localhost:5001/images/trainers/{fileName}";
+            }
+
+            // Save CV
+            if (cv != null && cv.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "documents",
+                    "trainers"
+                );
+
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(cv.FileName);
+
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+
+                await cv.CopyToAsync(stream);
+
+                requestDto.CvUrl = $"https://localhost:5001/documents/trainers/{fileName}";
+            }
 
             var error = await _trainerService.SubmitTrainerRequestAsync(userId, requestDto);
 

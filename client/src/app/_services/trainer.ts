@@ -23,13 +23,19 @@ export class TrainerService {
             this.baseUrl
         );
     }
+    
+    getTrainer(id: number) {
+        return this.http.get<Trainer>(
+            `${this.baseUrl}/${id}`
+        );
+    }
 
-    submitTrainerRequest(request: TrainerRequest) {
-        return this.http.post(`${this.baseUrl}/request`, request);
+    submitTrainerRequest(formData: FormData) {
+        return this.http.post(`${this.baseUrl}/request`, formData);
     }
 
     getGyms() {
-        return this.http.get<Gym[]>(this.baseUrl);
+        return this.http.get<Gym[]>('https://localhost:5001/api/gym');
     }
 
     getTrainerRequests() {

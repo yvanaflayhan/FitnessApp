@@ -67,6 +67,9 @@ namespace API.Services
                 Specialization = request.Specialization,
                 Description = request.Description,
                 YearsOfExperience = request.YearsOfExperience,
+                Skills = request.Skills,
+                Phone = request.Phone,
+                ImageUrl = request.ImageUrl,
                 IsApproved = true,
                 User = user,
             };
@@ -89,9 +92,49 @@ namespace API.Services
             return request != null;
         }
 
-        public async Task<IEnumerable<Trainer>> GetTrainersAsync()
+        public async Task<IEnumerable<TrainerDto>> GetTrainersAsync()
         {
-            return await _trainerRepository.GetTrainersAsync();
+            var trainers = await _trainerRepository.GetTrainersAsync();
+
+            return trainers
+                .Select(t => new TrainerDto
+                {
+                    Id = t.Id,
+                    UserId = t.UserId,
+                    FullName = string.IsNullOrWhiteSpace(t.User.FullName)
+                        ? t.User.UserName
+                        : t.User.FullName,
+                    Specialization = t.Specialization,
+                    Description = t.Description,
+                    YearsOfExperience = t.YearsOfExperience,
+                    Skills = t.Skills,
+                    Phone = t.Phone,
+                    ImageUrl = t.ImageUrl,
+                    IsApproved = t.IsApproved,
+                })
+                .ToList();
+        }
+
+        public async Task<TrainerDto?> GetTrainerByIdAsync(int id)
+        {
+            var trainer = await _trainerRepository.GetTrainerByIdAsync(id);
+
+            if (trainer == null)
+                return null;
+
+            return new TrainerDto
+            {
+                Id = trainer.Id,
+                UserId = trainer.UserId,
+                FullName = trainer.User.FullName,
+                Specialization = trainer.Specialization,
+                Description = trainer.Description,
+                YearsOfExperience = trainer.YearsOfExperience,
+                Skills = trainer.Skills,
+                Phone = trainer.Phone,
+                ImageUrl = trainer.ImageUrl,
+                IsApproved = trainer.IsApproved,
+            };
         }
 
         public async Task<string?> SubmitTrainerRequestAsync(

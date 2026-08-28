@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using API.DTOs;
@@ -10,11 +11,17 @@ namespace API.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(IUserRepository userRepository, ITokenService tokenService)
+        public AccountService(
+            IUserRepository userRepository,
+            ITokenService tokenService,
+            IHttpContextAccessor httpContextAccessor
+        )
         {
             _userRepository = userRepository;
             _tokenService = tokenService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<UserDto> RegisterAsync(RegisterDto registerDto)
@@ -29,6 +36,7 @@ namespace API.Services
             var user = new AppUser //converting registerDto to AppUser
             {
                 UserName = registerDto.Username.ToLower(),
+                FullName = registerDto.FullName,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key,
             };
@@ -59,6 +67,30 @@ namespace API.Services
                 if (computedHash[i] != user.PasswordHash[i])
                     throw new Exception("Invalid password");
             }
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user),
+                Role = user.Role,
+            };
+        }
+
+        public async Task<UserDto> GetCurrentUserAsync()
+        {
+            var userIdClaim = _httpContextAccessor
+                .HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
+
+            if (userIdClaim == null)
+                throw new Exception("User ID not found in token.");
+
+            var userId = int.Parse(userIdClaim);
+
+            var user = await _userRepository.GetUserAsync(userId);
+
+            if (user == null)
+                throw new Exception("User not found.");
 
             return new UserDto
             {

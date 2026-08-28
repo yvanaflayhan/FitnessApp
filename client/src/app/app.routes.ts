@@ -17,6 +17,7 @@ import { AdminBookings } from './admin/admin-bookings/admin-bookings';
 import { AdminGymDetails } from './admin/admin-gym-details/admin-gym-details';
 import { AdminTrainerRequests } from './admin/admin-trainer-requests/admin-trainer-requests';
 import { AdminTrainers } from './admin/admin-trainers/admin-trainers';
+import { TrainerProfile } from './trainers/trainer-profile/trainer-profile';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -29,6 +30,7 @@ export const routes: Routes = [
             { path: 'gyms', component: GymLists },
             { path: 'gyms/:id', component: GymDetail },
             { path: 'trainers', component: Trainers },
+            { path: 'trainers/:id', component: TrainerProfile },
             { path: 'bookings', component: Bookings },
             { path: 'profile', component: Profile },
 

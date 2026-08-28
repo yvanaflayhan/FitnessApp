@@ -78,5 +78,10 @@ namespace API.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Gym>> GetAllGymsAsync()
+        {
+            return await _context.Gyms.ToListAsync();
+        }
     }
 }

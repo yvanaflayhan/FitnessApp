@@ -44,52 +44,94 @@
       @for (trainer of filteredTrainers; track trainer.id) {
 
       <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm border-0">
+        <div class="card h-100 shadow-sm border-0 trainer-card">
 
-          <!-- Trainer Image -->
-          <div class="position-relative" style="height: 240px; background: var(--bs-secondary-bg);">
+          <div class="card-body">
 
-            @if (trainer.imageUrl) {
-            <img [src]="trainer.imageUrl" [alt]="trainer.specialization" class="w-100 h-100 object-fit-cover" />
-            } @else {
-            <div class="d-flex align-items-center justify-content-center h-100 fs-1 text-secondary">
-              <i class="bi bi-person-arms-up"></i>
+            <!-- Trainer Header -->
+            <div class="d-flex align-items-center mb-3">
+
+              <!-- Profile Picture -->
+              <div class="trainer-avatar me-3">
+
+                @if (trainer.imageUrl) {
+                <img [src]="trainer.imageUrl" [alt]="trainer.fullName" class="trainer-avatar-img" />
+                } @else {
+                <div class="trainer-avatar-placeholder">
+                  <i class="bi bi-person"></i>
+                </div>
+                }
+
+              </div>
+
+              <!-- Name + Specialization -->
+              <div class="min-w-0">
+
+                <h3 class="h5 fw-bold text-dark mb-1 text-truncate">
+                  {{ trainer.fullName }}
+                </h3>
+
+                <span class="text-primary fw-semibold small">
+                  {{ trainer.specialization }}
+                </span>
+
+              </div>
+
             </div>
-            }
 
-            <span class="badge text-bg-dark position-absolute bottom-0 end-0 m-3">
-              {{ trainer.yearsOfExperience || 0 }} years
-            </span>
 
-          </div>
-
-          <!-- Trainer Content -->
-          <div class="card-body d-flex flex-column">
-
-            <span class="text-primary fw-bold text-uppercase small">
-              {{ trainer.specialization }}
-            </span>
-
-            <h3 class="card-title h5 mt-1 text-dark">Trainer</h3>
-
-            <p class="card-text text-secondary flex-grow-1">
+            <!-- Description -->
+            <p class="text-secondary small mb-3">
               {{
               trainer.description ||
               'Professional trainer ready to help you reach your goals.'
               }}
             </p>
 
-            <div class="border-top pt-3 mb-3 d-flex align-items-center gap-2 text-secondary small">
-              <span
-                class="badge rounded-pill text-bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center"
-                style="width: 22px; height: 22px;">
-                <i class="bi bi-check-lg"></i>
-              </span>
-              {{ trainer.yearsOfExperience || 0 }} years experience
+
+            <!-- Skills -->
+            @if (trainer.skills) {
+            <div class="mb-3">
+
+              <div class="small fw-semibold text-dark mb-2">
+                Skills
+              </div>
+
+              <div class="d-flex flex-wrap gap-1">
+
+                @for (skill of trainer.skills.split(','); track skill) {
+                <span class="badge rounded-pill text-bg-light border">
+                  {{ skill.trim() }}
+                </span>
+                }
+
+              </div>
+
+            </div>
+            }
+
+
+            <!-- Experience -->
+            <div class="border-top pt-3 mb-3">
+
+              <div class="d-flex align-items-center text-secondary small">
+
+                <i class="bi bi-award me-2 text-primary"></i>
+
+                <span>
+                  {{ trainer.yearsOfExperience || 0 }} years experience
+                </span>
+
+              </div>
+
             </div>
 
-            <button type="button" class="btn btn-dark d-flex justify-content-between align-items-center">
-              View Profile <i class="bi bi-arrow-right"></i>
+
+            <!-- Button -->
+            <button type="button" class="btn btn-dark w-100 d-flex justify-content-between align-items-center"
+            [routerLink]="['/trainers', trainer.id]">
+              View Profile
+              <i class="bi bi-arrow-right"></i>
             </button>
 
           </div>
@@ -175,6 +217,93 @@
 
       <form #trainerForm="ngForm" (ngSubmit)="submitTrainerRequest()">
 
+        <!-- ==================== PERSONAL INFORMATION ==================== -->
+        <h5 class="fw-bold mb-3">Personal Information</h5>
+
+        <div class="row">
+
+          <!-- Age -->
+          <div class="col-md-6 mb-3">
+            <label for="age" class="form-label fw-semibold">
+              Age
+            </label>
+
+            <input id="age" type="number" class="form-control" name="age" [(ngModel)]="trainerRequest.age" min="18"
+              placeholder="e.g. 25">
+          </div>
+
+
+          <!-- Gender -->
+          <div class="col-md-6 mb-3">
+            <label for="gender" class="form-label fw-semibold">
+              Gender
+            </label>
+
+            <select id="gender" class="form-select" name="gender" [(ngModel)]="trainerRequest.gender">
+
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+
+            </select>
+          </div>
+
+
+          <!-- Phone -->
+          <div class="col-md-6 mb-3">
+            <label for="phone" class="form-label fw-semibold">
+              Phone Number
+            </label>
+
+            <input id="phone" type="tel" class="form-control" name="phone" [(ngModel)]="trainerRequest.phone"
+              placeholder="e.g. 71 123 456">
+          </div>
+
+
+          <!-- Height -->
+          <div class="col-md-3 mb-3">
+            <label for="height" class="form-label fw-semibold">
+              Height (cm)
+            </label>
+
+            <input id="height" type="number" class="form-control" name="height" [(ngModel)]="trainerRequest.height"
+              min="100" max="250" placeholder="e.g. 175">
+          </div>
+
+
+          <!-- Weight -->
+          <div class="col-md-3 mb-3">
+            <label for="weight" class="form-label fw-semibold">
+              Weight (kg)
+            </label>
+
+            <input id="weight" type="number" class="form-control" name="weight" [(ngModel)]="trainerRequest.weight"
+              min="30" max="300" placeholder="e.g. 70">
+          </div>
+
+        </div>
+        <!-- Profile Image -->
+        <div class="mb-3">
+
+          <label for="image" class="form-label fw-semibold">
+            Profile Picture
+          </label>
+
+          <input id="image" type="file" class="form-control" name="image" accept="image/*"
+            (change)="onImageSelected($event)">
+
+          <div class="form-text">
+            Upload a clear profile picture. This picture will be shown on your trainer profile.
+          </div>
+
+        </div>
+
+
+        <!-- ==================== PROFESSIONAL INFORMATION ==================== -->
+        <h5 class="fw-bold mb-3 mt-4">
+          Professional Information
+        </h5>
+
         <!-- Specialization -->
         <div class="mb-3">
 
@@ -202,21 +331,145 @@
         </div>
 
 
-        <!-- Description -->
-        <div class="mb-4">
+        <!-- Skills -->
+        <div class="mb-3">
 
-          <label for="description" class="form-label fw-semibold">
-            About You
+          <label for="skills" class="form-label fw-semibold">
+            Skills
           </label>
 
-          <textarea id="description" class="form-control" name="description" rows="5"
-            [(ngModel)]="trainerRequest.description" placeholder="Tell us about your experience and expertise...">
-            </textarea>
+          <input id="skills" type="text" class="form-control" name="skills" [(ngModel)]="trainerRequest.skills"
+            placeholder="e.g. Strength Training, Yoga, Rehabilitation">
+
+          <div class="form-text">
+            List the sports or training skills you specialize in.
+          </div>
+
+        </div>
+        <!-- CV -->
+        <div class="mb-4">
+          <label for="cv" class="form-label fw-semibold">
+            Curriculum Vitae (CV)
+          </label>
+
+          <input id="cv" type="file" class="form-control" name="cv" accept=".pdf,.doc,.docx"
+            (change)="onCvSelected($event)">
+
+          <div class="form-text">
+            Upload your CV in PDF, DOC, or DOCX format.
+          </div>
+        </div>
+
+
+        <!-- ==================== WORKPLACE ==================== -->
+        <h5 class="fw-bold mb-3 mt-4">
+          Workplace
+        </h5>
+
+
+        <!-- Workplace Type -->
+        <div class="mb-3">
+
+          <label for="workplaceType" class="form-label fw-semibold">
+            Where do you work?
+          </label>
+
+          <select id="workplaceType" class="form-select" name="workplaceType" [(ngModel)]="workplaceType" required>
+
+            <option value="">
+              Select workplace
+            </option>
+
+            <option value="fitnessGym">
+              A gym listed on FitnessApp
+            </option>
+
+            <option value="otherGym">
+              Another gym
+            </option>
+
+            <option value="independent">
+              Independently / Home visits
+            </option>
+
+            <option value="both">
+              Both a gym and independently
+            </option>
+
+          </select>
 
         </div>
 
 
-        <!-- Error message -->
+        <!-- FitnessApp Gym -->
+        @if (workplaceType === 'fitnessGym' || workplaceType === 'both') {
+
+        <div class="mb-3">
+
+          <label for="gym" class="form-label fw-semibold">
+            Select Gym
+          </label>
+
+          <select id="gym" class="form-select" name="gymId" [(ngModel)]="trainerRequest.gymId" required>
+
+            <option [ngValue]="undefined">
+              Select a gym
+            </option>
+
+            @for (gym of gyms; track gym.id) {
+
+            <option [ngValue]="gym.id">
+              {{ gym.name }} — {{ gym.address }}
+            </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        }
+
+
+        <!-- Other Gym -->
+        @if (workplaceType === 'otherGym') {
+
+        <div class="mb-3">
+
+          <label for="otherGymName" class="form-label fw-semibold">
+            Gym Name
+          </label>
+
+          <input id="otherGymName" type="text" class="form-control" name="otherGymName"
+            [(ngModel)]="trainerRequest.otherGymName" placeholder="Enter the gym name">
+
+        </div>
+
+        }
+
+
+        <!-- ==================== ABOUT THE TRAINER ==================== -->
+        <h5 class="fw-bold mb-3 mt-4">
+          About You
+        </h5>
+
+
+        <!-- Description / Story -->
+        <div class="mb-4">
+
+          <label for="description" class="form-label fw-semibold">
+            Your Story
+          </label>
+
+          <textarea id="description" class="form-control" name="description" rows="6"
+            [(ngModel)]="trainerRequest.description"
+            placeholder="Tell us about yourself, how you started in sports, your experience, why you love sports, and how you continue developing your skills...">
+    </textarea>
+
+        </div>
+
+
+        <!-- ==================== ERROR ==================== -->
         @if (requestError) {
 
         <div class="alert alert-danger">
@@ -226,16 +479,20 @@
         }
 
 
-        <!-- Buttons -->
+        <!-- ==================== BUTTONS ==================== -->
         <div class="d-flex justify-content-end gap-2">
 
           <button type="button" class="btn btn-outline-secondary" (click)="closeTrainerForm()">
+
             Cancel
+
           </button>
+
 
           <button type="submit" class="btn btn-primary" [disabled]="trainerForm.invalid">
 
             Submit Application
+
             <i class="bi bi-arrow-right ms-1"></i>
 
           </button>

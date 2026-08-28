@@ -10,7 +10,8 @@ namespace API.Services
         Task<bool> ApproveTrainerRequestAsync(int id);
         Task<bool> RejectTrainerRequestAsync(int id);
         Task<bool> HasPendingTrainerRequestAsync(int userId);
-        Task<IEnumerable<Trainer>> GetTrainersAsync();
+        Task<IEnumerable<TrainerDto>> GetTrainersAsync();
         Task<string?> SubmitTrainerRequestAsync(int userId, TrainerRequestDto requestDto);
+        Task<TrainerDto?> GetTrainerByIdAsync(int id);
     }
 }
