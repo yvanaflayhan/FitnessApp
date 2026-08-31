@@ -1,0 +1,20 @@
+.register-card {
+    background: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.register-card .btn {
+    border: none;
+    box-shadow: none;
+}
+
+.register-card .btn:focus,
+.register-card .btn:active {
+    outline: none;
+    box-shadow: none;
+}

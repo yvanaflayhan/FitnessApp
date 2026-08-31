@@ -1,22 +1,29 @@
-<div class="container mt-5">
+<div class="home-container">
     @if(!registerMode){
-    <div style="text-align: center;">
-        <h1> Find the Right Gym & Trainer </h1>
-        <p class="lead"> Discover nearby gyms, connect with specialized trainers, and start your fitness journey today.
+    <div class="hero-section">
+        <div class="hero-pin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z" />
+                <circle cx="12" cy="10" r="2.5" />
+            </svg>
+            Gyms & trainers near you
+        </div>
+        <h1>Find the Right Gym & Trainer</h1>
+        <p class="lead">Discover nearby gyms, connect with specialized trainers, and start your fitness journey today.
         </p>
-        <div class="text-center">
-            <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2"> Get Started </button>
-            <button class="btn btn-primary btn-info btn-lg "> Learn more </button>
+        <div class="hero-actions">
+            <button (click)="registerToggle()" class="btn btn-primary-solid">Get Started</button>
+            <button class="btn btn-ghost">Learn more</button>
         </div>
     </div>
     }@else{
-    <div class="container">
+    <div class="register-section">
         <div class="row justify-content-center">
-            <div class="col-4">
+            <div class="col-md-5 col-lg-4">
                 <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
             </div>
         </div>
     </div>
     }
-
 </div>
