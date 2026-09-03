@@ -16,18 +16,28 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './nav.css',
 })
 export class Nav {
-  model: any ={}
+  model: any = {}
 
-  constructor(public account: Account, private router: Router, private toastr: ToastrService) {}
+  constructor(public account: Account, private router: Router, private toastr: ToastrService) { }
 
-  login(){
+  login() {
     console.log(this.model);
     this.account.login(this.model).subscribe({
-      next: () => this.router.navigateByUrl('/gyms'),
+      next: (user) => {
+        if (user?.role === 'Admin') {
+          this.router.navigateByUrl('/admin');
+        } else {
+          this.router.navigateByUrl('/gyms');
+        }
+      },
+      error : () => {
+        this.toastr.error('Invalid Username or password ');
+
+      }
     })
   }
 
-  logout(){
+  logout() {
     this.account.logout();
     this.router.navigateByUrl('/');
   }

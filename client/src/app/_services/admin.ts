@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
 import { Gym } from '../_models/gym';
+import { environment } from '../../environments/environment';
 
 interface PagedResult<T> {
   items: T[];
@@ -14,7 +15,7 @@ interface PagedResult<T> {
   providedIn: 'root'
 })
 export class AdminService {
-  private baseUrl = 'https://localhost:5001/api/admin';
+  baseUrl = environment.baseUrl + 'admin';
 
   constructor(private http: HttpClient) { }
 

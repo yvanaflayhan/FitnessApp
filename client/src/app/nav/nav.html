@@ -16,9 +16,6 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/bookings" routerLinkActive="active">Bookings</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
-            </li>
             }
             @if (user.role === 'Admin') {
             <li class="nav-item">
@@ -55,15 +52,38 @@
 
         @if (account.currentUser$ | async; as user) {
 
-        <div class="dropdown" dropdown>
-            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle> Welcome {{user.username |
-                titlecase}}</a>
-            <div class="dropdown-menu mt-3" *dropdownMenu>
-                <a class="dropdown-item"> Edit Profile </a>
-                <a class="dropdown-item" (click)="logout()"> Logout </a>
+        <div class="d-flex align-items-center gap-3">
+
+            <!-- Welcome text -->
+            <span class="text-light">
+                Welcome {{ user.username | titlecase }}
+            </span>
+
+            <!-- Profile icon -->
+            <div class="dropdown" dropdown>
+
+                <button type="button" class="btn btn-link text-light p-0" dropdownToggle>
+                    <i class="bi bi-person-circle fs-4"></i>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-end mt-3" *dropdownMenu>
+
+                    <a class="dropdown-item" routerLink="/profile">
+                        <i class="bi bi-person me-2"></i>
+                        Edit Profile
+                    </a>
+
+                    <a class="dropdown-item" (click)="logout()">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </a>
+
+                </div>
+
             </div>
 
         </div>
+
         }
         @if (!(account.currentUser$ | async)) {
         <form #loginForm="ngForm" class="d-flex nav-login-form" (ngSubmit)="login()" autocomplete="off">

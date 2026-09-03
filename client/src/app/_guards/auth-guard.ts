@@ -17,7 +17,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
       // No user currently loaded.
       // Ask the API to validate the saved token.
-      const userJson = localStorage.getItem('user');
+      const userJson = sessionStorage.getItem('user');
 
       if (!userJson) {
         toastr.error('You shall not pass!');
@@ -30,7 +30,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
           account.setCurentUser(currentUser);
 
-          localStorage.setItem(
+          sessionStorage.setItem(
             'user',
             JSON.stringify(currentUser)
           );

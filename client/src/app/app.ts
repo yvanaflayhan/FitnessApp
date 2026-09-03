@@ -25,7 +25,7 @@ export class App implements OnInit {
 
   setCurrentUser() {
 
-    const userString = localStorage.getItem('user');
+    const userString = sessionStorage.getItem('user');
 
     if (!userString) {
       return;

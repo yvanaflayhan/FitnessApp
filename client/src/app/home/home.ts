@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Register } from "../register/register";
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class Home implements OnInit {
   }
 
   getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe({
+    this.http.get(environment.baseUrl + 'users').subscribe({
       next: response => { console.log(response); this.users = response; },//I added the {} and the console.log 
       error: error => console.log(error),
       complete: () => console.log('Request has completed ')
