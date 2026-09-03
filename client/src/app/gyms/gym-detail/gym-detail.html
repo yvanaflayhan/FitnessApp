@@ -1,1 +1,255 @@
-<p>gym-detail works!</p>
+<div class="gym-details-page">
+
+  @if (gym) {
+
+    <!-- Hero -->
+    <section class="hero-warm py-5 border-bottom">
+      <div class="container-fluid px-4 px-lg-5 py-4">
+
+        <a
+          routerLink="/gyms"
+          class="btn btn-outline-primary bg-white shadow-sm mb-4">
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to Gyms
+        </a>
+
+        <div class="row align-items-center g-5">
+
+          <!-- Gym Image -->
+          <div class="col-lg-6">
+
+            <div class="gym-details-image">
+
+              @if (gym.imageUrl) {
+
+                <img
+                  [src]="gym.imageUrl"
+                  [alt]="gym.name"
+                  class="w-100 h-100 object-fit-cover"
+                />
+
+              } @else {
+
+                <div class="gym-details-image-placeholder">
+                  <i class="bi bi-building"></i>
+                </div>
+
+              }
+
+            </div>
+
+          </div>
+
+
+          <!-- Gym Information -->
+          <div class="col-lg-6">
+
+            <span class="badge text-bg-primary mb-3">
+              FitnessApp Gym
+            </span>
+
+            <h1 class="display-5 fw-bold text-dark mb-3">
+              {{ gym.name }}
+            </h1>
+
+            <p class="text-secondary d-flex align-items-start gap-2 mb-4">
+              <i class="bi bi-pin-map-fill text-primary mt-1"></i>
+
+              <span>
+                {{ gym.address }}
+              </span>
+            </p>
+
+            @if (gym.description) {
+
+              <p class="lead text-secondary mb-4">
+                {{ gym.description }}
+              </p>
+
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Information -->
+    <section class="container-fluid px-4 px-lg-5 py-5">
+
+      <div class="mb-4">
+
+        <span class="text-primary fw-bold text-uppercase small">
+          Gym Information
+        </span>
+
+        <h2 class="fw-bold text-dark">
+          Everything you need to know
+        </h2>
+
+      </div>
+
+
+      <div class="row g-4">
+
+        <!-- Location -->
+        <div class="col-12 col-md-6 col-lg-4">
+
+          <div class="card h-100 border-0 shadow-sm gym-info-card">
+
+            <div class="card-body">
+
+              <div class="gym-info-icon mb-3">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+
+              <h3 class="h5 fw-bold text-dark">
+                Location
+              </h3>
+
+              <p class="text-secondary mb-0">
+                {{ gym.location }}
+              </p>
+
+              <p class="text-secondary small mt-2 mb-0">
+                {{ gym.address }}
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Phone -->
+        @if (gym.phone) {
+
+          <div class="col-12 col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm gym-info-card">
+
+              <div class="card-body">
+
+                <div class="gym-info-icon mb-3">
+                  <i class="bi bi-telephone-fill"></i>
+                </div>
+
+                <h3 class="h5 fw-bold text-dark">
+                  Contact
+                </h3>
+
+                <p class="text-secondary mb-0">
+                  {{ gym.phone }}
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <!-- Opening Hours -->
+        @if (gym.openingHours || gym.closingHours) {
+
+          <div class="col-12 col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm gym-info-card">
+
+              <div class="card-body">
+
+                <div class="gym-info-icon mb-3">
+                  <i class="bi bi-clock-fill"></i>
+                </div>
+
+                <h3 class="h5 fw-bold text-dark">
+                  Opening Hours
+                </h3>
+
+                <p class="text-secondary mb-0">
+
+                  @if (gym.openingHours) {
+                    {{ gym.openingHours }}
+                  }
+
+                  @if (gym.openingHours && gym.closingHours) {
+                    -
+                  }
+
+                  @if (gym.closingHours) {
+                    {{ gym.closingHours }}
+                  }
+
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- Coordinates -->
+      <div class="mt-5">
+
+        <div class="card border-0 shadow-sm">
+
+          <div class="card-body p-4">
+
+            <div class="d-flex align-items-center gap-3">
+
+              <i class="bi bi-map-fill text-primary fs-3"></i>
+
+              <div>
+
+                <h3 class="h5 fw-bold text-dark mb-1">
+                  Location Coordinates
+                </h3>
+
+                <p class="text-secondary mb-0">
+                  Latitude: {{ gym.latitude }}
+                  <span class="mx-2">•</span>
+                  Longitude: {{ gym.longitude }}
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  } @else {
+
+    <!-- Loading -->
+    <section class="container-fluid px-4 px-lg-5 py-5">
+
+      <div class="text-center py-5">
+
+        <div class="spinner-border text-primary mb-3"></div>
+
+        <p class="text-secondary mb-0">
+          Loading gym details...
+        </p>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

@@ -1,1 +1,118 @@
-<p>gym-lists works!</p>
+<div class="gyms-page">
+
+  <!-- Hero -->
+  <section class="hero-warm py-5 border-bottom">
+    <div class="container-fluid px-4 px-lg-5 py-4">
+
+      <span class="badge text-bg-primary mb-3">FitnessApp Gyms</span>
+
+      <h1 class="display-4 fw-bold mb-3 text-dark">
+        Find a gym
+        <span class="text-primary">near you.</span>
+      </h1>
+
+      <p class="lead text-secondary col-lg-7">
+        Browse gyms in your area, compare what each one offers, and pick the one that fits your routine.
+      </p>
+
+      <div class="d-flex flex-wrap gap-2 mt-4 col-lg-8">
+
+        <div class="input-group input-group-lg shadow-sm flex-grow-1">
+          <span class="input-group-text bg-white border-0">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" class="form-control border-0" placeholder="Search by name or area..."
+            [(ngModel)]="searchTerm" (ngModelChange)="filterGyms()" name="searchTerm" />
+        </div>
+
+        <button type="button" class="btn btn-lg btn-outline-primary bg-white shadow-sm d-flex align-items-center gap-2"
+          (click)="sortByNearest()">
+          <i class="bi bi-geo-alt-fill"></i>
+          Near me
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Gyms Section -->
+  <section class="container-fluid px-4 px-lg-5 py-5">
+
+    <div class="mb-4">
+      <span class="text-primary fw-bold text-uppercase small">Our Gyms</span>
+      <h2 class="fw-bold text-dark">All locations</h2>
+      <p class="text-secondary">{{ filteredGyms.length }} gyms available</p>
+    </div>
+
+    @if (filteredGyms.length > 0) {
+
+    <div class="row g-4">
+
+      @for (gym of filteredGyms; track gym.id) {
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm border-0 gym-card">
+
+          <div class="gym-card-media">
+
+            @if (gym.imageUrl) {
+            <img [src]="gym.imageUrl" [alt]="gym.name" class="object-fit-cover w-100 h-100" />
+            } @else {
+            <div class="gym-card-media-placeholder">
+              <i class="bi bi-building"></i>
+            </div>
+            }
+
+          </div>
+
+          <div class="card-body">
+
+            <h3 class="h5 fw-bold text-dark mb-2">
+              {{ gym.name }}
+            </h3>
+
+            <p class="text-secondary small mb-3 d-flex align-items-start gap-2">
+              <i class="bi bi-pin-map text-primary mt-1"></i>
+              <span>{{ gym.address }}</span>
+            </p>
+
+            @if (gym.description) {
+            <p class="text-secondary small mb-3">
+              {{ gym.description }}
+            </p>
+            }
+
+            <button type="button" class="btn btn-dark w-100 d-flex justify-content-between align-items-center"
+              [routerLink]="['/gyms', gym.id]">
+              See Details
+              <i class="bi bi-arrow-right"></i>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+      }
+
+    </div>
+
+    } @else {
+
+    <div class="text-center border border-dashed rounded-4 py-5 bg-white">
+      <div class="fs-1 mb-3 text-secondary">
+        <i class="bi bi-emoji-frown"></i>
+      </div>
+      <h3 class="h5 text-dark">No gyms available yet</h3>
+      <p class="text-secondary col-md-6 mx-auto mb-0">
+        We're still adding gyms to your area. Check back soon.
+      </p>
+    </div>
+
+    }
+
+  </section>
+
+</div>

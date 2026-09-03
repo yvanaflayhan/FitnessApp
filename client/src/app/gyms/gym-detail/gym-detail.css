@@ -1,0 +1,53 @@
+.gym-details-page {
+  min-height: 100vh;
+}
+
+.hero-warm {
+  background: linear-gradient(
+    135deg,
+    var(--bs-tertiary-bg) 0%,
+    var(--bs-primary-bg-subtle) 100%
+  );
+}
+
+.gym-details-image {
+  height: 400px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--bs-secondary-bg);
+}
+
+.gym-details-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bs-secondary-color);
+  font-size: 80px;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.gym-info-card {
+  border-radius: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gym-info-card:hover {
+  transform: translateY(-4px);
+}
+
+.gym-info-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bs-primary-bg-subtle);
+  color: var(--bs-primary);
+  font-size: 20px;
+}

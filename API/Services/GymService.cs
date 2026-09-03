@@ -37,12 +37,26 @@ namespace API.Services
         {
             return await _gymRepository.DeleteGymAsync(id);
         }
-        public async Task<IEnumerable<Gym>> GetAllGymsAsync()
+        public async Task<IEnumerable<GymDto>> GetAllGymsAsync()
         {
-            return await _gymRepository.GetAllGymsAsync();
-        }
-        
-        
-        
+            var gyms = await _gymRepository.GetAllGymsAsync();
+
+            return gyms.Select(gym => new GymDto
+            {
+                Id = gym.Id,
+                Name = gym.Name,
+                Address = gym.Address,
+                Location = gym.Location,
+                Latitude = gym.Latitude,
+                Longitude = gym.Longitude,
+                Phone = gym.Phone,
+                OpeningHours = gym.OpeningHours,
+                ClosingHours = gym.ClosingHours,
+                Description = gym.Description,
+                ImageUrl = gym.ImageUrl,
+                SocialMedia = gym.SocialMedia,
+                MounthlyFee = gym.MounthlyFee
+            });
+        }   
     }
 }

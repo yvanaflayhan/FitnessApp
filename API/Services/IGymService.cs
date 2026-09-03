@@ -10,7 +10,7 @@ namespace API.Services
         Task <Gym> AddGymAsync(Gym gym);
         Task<Gym?> UpdateGymAsync(int id, Gym gym);
         Task<bool> DeleteGymAsync(int id);
-        Task <IEnumerable<Gym>> GetAllGymsAsync();
+        Task <IEnumerable<GymDto>> GetAllGymsAsync();
 
     }
 }
