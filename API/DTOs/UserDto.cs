@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-
 namespace API.DTOs
 {
     public class UserDto
@@ -8,6 +6,9 @@ namespace API.DTOs
 
         public string Token {get; set;}
         public string Role {get; set;}
+        public double? Latitude {get; set;}
+        public double? Longitude {get; set;}
+        public string? Location {get; set;}
         
 
     }

@@ -48,6 +48,9 @@ namespace API.Services
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
                 Role = user.Role,
+                Latitude = user.Latitude,
+                Longitude = user.Longitude,
+                Location = user.Location,
             };
         }
 
@@ -73,6 +76,8 @@ namespace API.Services
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
                 Role = user.Role,
+                Latitude = user.Latitude,
+                Longitude = user.Longitude,
             };
         }
 

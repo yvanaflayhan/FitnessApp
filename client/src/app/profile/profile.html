@@ -1,1 +1,336 @@
-<p>profile works!</p>
+<div class="profile-page">
+
+  <!-- Hero -->
+  <section class="hero-warm py-5 border-bottom">
+    <div class="container-fluid px-4 px-lg-5 py-4">
+
+      <span class="badge text-bg-primary mb-3">
+        FitnessApp
+      </span>
+
+      <h1 class="display-5 fw-bold text-dark mb-3">
+        My Profile
+      </h1>
+
+      <p class="lead text-secondary mb-0">
+        Manage your personal information and account settings.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- Profile Content -->
+  <section class="container-fluid px-4 px-lg-5 py-5">
+
+    @if (user) {
+
+    <div class="row g-5">
+
+      <!-- LEFT: Profile -->
+      <div class="col-12 col-lg-4">
+
+        <div class="profile-sidebar">
+
+          <!-- Profile photo + name -->
+          <div class="profile-header">
+
+            <div class="profile-photo-wrapper">
+
+              <div class="profile-photo">
+                <i class="bi bi-person-fill"></i>
+              </div>
+
+              <!-- Edit photo button -->
+              <button type="button" class="profile-photo-edit" title="Change profile photo">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+
+            </div>
+
+
+            <div class="profile-name">
+
+              <h2 class="h4 fw-bold text-dark mb-1">
+                {{ user.username | titlecase }}
+              </h2>
+
+              <span class="badge text-bg-primary">
+                {{ user.role }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <hr class="my-4">
+
+
+          <!-- Profile navigation / actions -->
+          <div class="profile-actions">
+
+            <button type="button" class="profile-action" (click)="showUsernameForm = true">
+              <div class="profile-action-icon">
+                <i class="bi bi-person"></i>
+              </div>
+
+              <div>
+                <span class="fw-semibold text-dark">
+                  Edit Username
+                </span>
+
+                <small class="d-block text-secondary">
+                  Change your username
+                </small>
+              </div>
+
+              <i class="bi bi-chevron-right ms-auto text-secondary"></i>
+            </button>
+
+
+            <button type="button" class="profile-action">
+              <div class="profile-action-icon">
+                <i class="bi bi-lock"></i>
+              </div>
+
+              <div>
+                <span class="fw-semibold text-dark">
+                  Change Password
+                </span>
+
+                <small class="d-block text-secondary">
+                  Update your password
+                </small>
+              </div>
+
+              <i class="bi bi-chevron-right ms-auto text-secondary"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT: Account Information -->
+      <div class="col-12 col-lg-8">
+
+        <div class="profile-content">
+
+          @if (showUsernameForm) {
+
+          <div class="username-edit-form mb-5">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+              <div>
+                <span class="text-primary fw-bold text-uppercase small">
+                  Edit Profile
+                </span>
+
+                <h3 class="fw-bold text-dark mt-1 mb-1">
+                  Change Username
+                </h3>
+
+                <p class="text-secondary mb-0">
+                  Choose a new username for your account.
+                </p>
+              </div>
+
+              <button type="button" class="btn btn-light" (click)="showUsernameForm = false">
+
+                <i class="bi bi-x-lg"></i>
+
+              </button>
+
+            </div>
+
+
+            <!-- Current Username -->
+
+            <div class="mb-3">
+
+              <label class="form-label text-secondary">
+                Current Username
+              </label>
+
+              <input type="text" class="form-control" [value]="user.username" disabled>
+
+            </div>
+
+
+            <!-- New Username -->
+
+            <div class="mb-4">
+
+              <label class="form-label text-secondary">
+                New Username
+              </label>
+
+              <input type="text" class="form-control" placeholder="Enter your new username" [(ngModel)]="newUsername">
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="d-flex justify-content-end gap-2">
+
+              <button type="button" class="btn btn-light" (click)="showUsernameForm = false">
+
+                Cancel
+
+              </button>
+
+              <button type="button" class="btn btn-primary" (click)="updateUsername()">
+
+                Save Changes
+
+              </button>
+
+            </div>
+
+          </div>
+
+          }
+
+          <div class="mb-4">
+
+            <span class="text-primary fw-bold text-uppercase small">
+              Personal Information
+            </span>
+
+            <h2 class="fw-bold text-dark mt-1">
+              Account details
+            </h2>
+
+            <p class="text-secondary mb-0">
+              Keep your information up to date.
+            </p>
+
+          </div>
+
+
+          <div class="row g-4">
+
+
+            <!-- Username -->
+            <div class="col-12 col-md-6">
+
+              <div class="profile-info-card">
+
+                <div class="profile-info-icon">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div>
+
+                  <span class="text-secondary small">
+                    Username
+                  </span>
+
+                  <p class="fw-semibold text-dark mb-0">
+                    {{ user.username }}
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Role -->
+            <div class="col-12 col-md-6">
+
+              <div class="profile-info-card">
+
+                <div class="profile-info-icon">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+
+                <div>
+
+                  <span class="text-secondary small">
+                    Account Role
+                  </span>
+
+                  <p class="fw-semibold text-dark mb-0">
+                    {{ user.role }}
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Location -->
+            <div class="col-12">
+
+              <div class="profile-info-card location-card">
+
+                <div class="profile-info-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+
+                <div class="flex-grow-1">
+
+                  <span class="text-secondary small">
+                    Location
+                  </span>
+
+                  @if (user.location) {
+
+                  <p class="fw-semibold text-dark mb-0">
+                    {{ user.location }}
+                  </p>
+
+                  <small class="text-secondary">
+                    Your current location
+                  </small>
+
+                  } @else {
+
+                  <p class="fw-semibold text-dark mb-0">
+                    No location set
+                  </p>
+
+                  <small class="text-secondary">
+                    Add your location to find gyms and trainers near you.
+                  </small>
+
+                  }
+
+                  <small class="text-secondary d-block mt-1">
+                    Used to help you find gyms and trainers near you.
+                  </small>
+
+                </div>
+
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="getLocation()">
+                  <i class="bi bi-pencil me-1"></i>
+                  Edit
+                </button>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    }
+
+  </section>
+
+</div>

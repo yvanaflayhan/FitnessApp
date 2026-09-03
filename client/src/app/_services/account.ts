@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_models/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Account {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.baseUrl;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -18,8 +19,8 @@ export class Account {
       map((response: User) => {
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          console.log('Saved:', localStorage.getItem('user'));
+          sessionStorage.setItem('user', JSON.stringify(user));
+          console.log('Saved:', sessionStorage.getItem('user'));
           this.currentUserSource.next(user);
         }
         return user;
@@ -31,7 +32,7 @@ export class Account {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
+          sessionStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
       })
@@ -44,7 +45,7 @@ export class Account {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
     this.currentUserSource.next(null);
   }
 

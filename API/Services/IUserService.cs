@@ -10,6 +10,7 @@ namespace API.Services
 
         Task<MemberDto?> UpdateUserAsync(int id, MemberUpdateDto updateDto);
         Task<bool> DeleteUserAsync(int id);
-        
+        Task<MemberDto?> UpdateLocationAsync(int id, UpdateLocationDto updateDto);
+        Task<MemberDto?> UpdateUsernameAsync (int id, UpdateUsernameDto updateDto);
     }
 }

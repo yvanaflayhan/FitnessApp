@@ -17,5 +17,8 @@ namespace API.Entities
         public byte[] PasswordSalt {get; set;}
 
         public string Role {get; set;} = "User";
+        public double? Latitude {get; set;}
+        public double? Longitude {get; set;}
+        public string? Location {get; set;}
     }
 }
